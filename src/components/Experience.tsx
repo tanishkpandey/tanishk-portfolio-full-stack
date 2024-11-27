@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 import { CalendarDays } from "lucide-react";
 
@@ -45,9 +44,9 @@ export const Experience = () => {
                 <h2 className="text-xl font-bold mb-4">Work Experience</h2>
                 <Card>
                     <CardContent className="pt-6">
-                        <ul className="space-y-8">
+                        <div className="space-y-8">
                             {[...Array(3)].map((_, i) => (
-                                <li key={i} className="border-b last:border-b-0 pb-8 last:pb-0">
+                                <div key={i} className="border-b last:border-b-0 pb-8 last:pb-0">
                                     <div className="animate-pulse">
                                         {/* Role and Company */}
                                         <div className="h-5 bg-gray-200 rounded w-1/3 mb-2"></div>
@@ -58,9 +57,9 @@ export const Experience = () => {
                                         <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
                                         <div className="h-4 bg-gray-200 rounded w-4/5 mb-2"></div>
                                     </div>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </CardContent>
                 </Card>
             </>
@@ -72,9 +71,9 @@ export const Experience = () => {
             <h2 className="text-xl font-bold mb-4">Work Experience</h2>
             <Card>
                 <CardContent className="pt-6">
-                    <ul className="space-y-8">
+                    <div className="space-y-8">
                         {experiences.map((exp) => (
-                            <li key={exp.id} className="border-b last:border-b-0 pb-8 last:pb-0">
+                            <div key={exp.id} className="border-b last:border-b-0 pb-8 last:pb-0">
                                 {/* Job Details */}
                                 <div className="flex items-center space-x-4">
                                     <div>
@@ -90,7 +89,13 @@ export const Experience = () => {
                                     <CalendarDays className="size-3 mr-2" />
                                     {exp.duration}
                                 </p>
-                                <p className="text-sm mt-2">{exp.description}</p>
+                                <ul>
+                                    {exp.description && exp.description.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))}
+                                </ul>
+
+                                <p className="text-sm mt-2">{ }</p>
                                 {/* Job Images */}
                                 {exp.images && exp.images.length > 0 && (
                                     <JobImages
@@ -100,9 +105,9 @@ export const Experience = () => {
                                         duration={exp.duration}
                                     />
                                 )}
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </CardContent>
             </Card>
         </>
