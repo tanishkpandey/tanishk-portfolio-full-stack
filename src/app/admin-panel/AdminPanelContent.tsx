@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -11,13 +11,14 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
+import AdminNavbar from "@/components/AdminNavbar";
 
 const AdminPanelContent = () => {
-  const [profile, setProfile] = useState({}); // For `Profile` collection
-  const [about, setAbout] = useState(""); // For `About` collection
-  const [projects, setProjects] = useState([]); // For `Projects` collection
-  const [experience, setExperience] = useState([]); // For `Experience` collection
+  const [profile, setProfile] = useState({});
+  const [about, setAbout] = useState("");
+  const [experience, setExperience] = useState([]);
 
+  const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
     title: "",
     description: "",
@@ -28,12 +29,11 @@ const AdminPanelContent = () => {
     role: "",
     company: "",
     duration: "",
-    description: "",
+    description: [""],
   });
-  const [skills, setSkills] = useState([]); // For the list of skills
-  const [newSkill, setNewSkill] = useState(""); // For the skill being added or edited
-  const [editingSkillIndex, setEditingSkillIndex] = useState(null); // Tracks the index of the skill being edited
-
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
+  const [editingSkillIndex, setEditingSkillIndex] = useState(null);
 
   // Fetch data from all collections on component mount
   useEffect(() => {
@@ -90,7 +90,9 @@ const AdminPanelContent = () => {
   // About Save Handler
   const handleSaveAbout = async () => {
     try {
-      await setDoc(doc(db, "About", "zj68ikIqsTCVdIBhIHuG"), { content: about });
+      await setDoc(doc(db, "About", "zj68ikIqsTCVdIBhIHuG"), {
+        content: about,
+      });
       alert("About updated successfully!");
     } catch (error) {
       console.error("Error updating About:", error);
@@ -152,7 +154,9 @@ const AdminPanelContent = () => {
 
     try {
       // Save updated skills to Firebase
-      await setDoc(doc(db, "Skills", "main"), { Skills: updatedSkills });
+      await setDoc(doc(db, "Skills", "W3xwilcBbb6XvU5al2it"), {
+        Skills: updatedSkills,
+      });
       setSkills(updatedSkills); // Update local state
       setNewSkill(""); // Clear input field
       setEditingSkillIndex(null); // Reset editing index
@@ -162,26 +166,24 @@ const AdminPanelContent = () => {
     }
   };
 
-
   const handleCancelEdit = () => {
     setNewSkill(""); // Clear the input field
     setEditingSkillIndex(null); // Reset editing state
   };
-
-
 
   const handleEditSkill = (index) => {
     setNewSkill(skills[index]); // Set the input to the selected skill
     setEditingSkillIndex(index); // Track the index of the skill being edited
   };
 
-
   const handleDeleteSkill = async (index) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
 
     try {
       // Save updated skills to Firebase
-      await setDoc(doc(db, "Skills", "main"), { Skills: updatedSkills });
+      await setDoc(doc(db, "Skills", "W3xwilcBbb6XvU5al2it"), {
+        Skills: updatedSkills,
+      });
       setSkills(updatedSkills); // Update local state
       alert("Skill deleted successfully!");
     } catch (error) {
@@ -189,25 +191,29 @@ const AdminPanelContent = () => {
     }
   };
 
-
-
-
   // Add or Update Experience
   const handleSaveExperience = async () => {
     try {
       if (newExperience.id) {
         // Update Experience
         const docRef = doc(db, "Experience", newExperience.id);
-        await updateDoc(docRef, newExperience);
+        await updateDoc(docRef, { ...newExperience });
         setExperience((prev) =>
           prev.map((exp) => (exp.id === newExperience.id ? newExperience : exp))
         );
       } else {
         // Add New Experience
-        const docRef = await addDoc(collection(db, "Experience"), newExperience);
+        const docRef = await addDoc(collection(db, "Experience"), {
+          ...newExperience,
+        });
         setExperience([...experience, { id: docRef.id, ...newExperience }]);
       }
-      setNewExperience({ role: "", company: "", duration: "", description: "" });
+      setNewExperience({
+        role: "",
+        company: "",
+        duration: "",
+        description: [""],
+      });
       alert("Experience saved successfully!");
     } catch (error) {
       console.error("Error saving experience:", error);
@@ -226,11 +232,9 @@ const AdminPanelContent = () => {
     }
   };
 
-
-
   return (
     <div className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
+      <AdminNavbar />
 
       {/* Profile Section */}
       <div>
@@ -253,7 +257,9 @@ const AdminPanelContent = () => {
           type="text"
           placeholder="Description"
           value={profile.description || ""}
-          onChange={(e) => setProfile({ ...profile, description: e.target.value })}
+          onChange={(e) =>
+            setProfile({ ...profile, description: e.target.value })
+          }
           className="p-2 bg-gray-700 rounded w-full mt-2"
         />
         <input
@@ -277,7 +283,10 @@ const AdminPanelContent = () => {
           onChange={(e) => setProfile({ ...profile, email: e.target.value })}
           className="p-2 bg-gray-700 rounded w-full mt-2"
         />
-        <button onClick={handleSaveProfile} className="mt-4 bg-blue-500 p-2 rounded">
+        <button
+          onClick={handleSaveProfile}
+          className="mt-4 bg-blue-500 p-2 rounded"
+        >
           Save Profile
         </button>
       </div>
@@ -290,7 +299,10 @@ const AdminPanelContent = () => {
           onChange={(e) => setAbout(e.target.value)}
           className="p-2 bg-gray-700 rounded w-full mt-2"
         />
-        <button onClick={handleSaveAbout} className="mt-4 bg-blue-500 p-2 rounded">
+        <button
+          onClick={handleSaveAbout}
+          className="mt-4 bg-blue-500 p-2 rounded"
+        >
           Save About
         </button>
       </div>
@@ -366,7 +378,14 @@ const AdminPanelContent = () => {
           </button>
           {newProject.id && (
             <button
-              onClick={() => setNewProject({ title: "", description: "", stack: "", liveLink: "" })}
+              onClick={() =>
+                setNewProject({
+                  title: "",
+                  description: "",
+                  stack: "",
+                  liveLink: "",
+                })
+              }
               className="p-2 bg-gray-500 rounded ml-2"
             >
               Cancel
@@ -374,7 +393,6 @@ const AdminPanelContent = () => {
           )}
         </div>
       </div>
-
 
       {/* Skills Section */}
       <div className="mt-6">
@@ -429,8 +447,6 @@ const AdminPanelContent = () => {
         </div>
       </div>
 
-
-
       {/* Experience Section */}
       <div className="mt-6">
         <h2 className="text-2xl font-bold">Experience</h2>
@@ -455,6 +471,112 @@ const AdminPanelContent = () => {
             </div>
           </div>
         ))}
+
+        {/* Experience Form */}
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold">
+            {newExperience.id ? "Edit Experience" : "Add Experience"}
+          </h3>
+
+          <input
+            type="text"
+            placeholder="Company"
+            value={newExperience.company}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, company: e.target.value })
+            }
+            className="w-full p-2 bg-gray-700 rounded mb-2"
+          />
+
+          <div>
+            <h4 className="font-semibold mb-1">Description</h4>
+
+            {newExperience.description.map((line, index) => (
+              <div key={index} className="flex items-center mb-2">
+                <input
+                  type="text"
+                  value={line}
+                  onChange={(e) => {
+                    const updatedDescription = [...newExperience.description];
+                    updatedDescription[index] = e.target.value;
+                    setNewExperience({
+                      ...newExperience,
+                      description: updatedDescription,
+                    });
+                  }}
+                  className="w-full p-2 bg-gray-700 rounded"
+                />
+                <button
+                  onClick={() => {
+                    const updatedDescription = newExperience.description.filter(
+                      (_, i) => i !== index
+                    );
+                    setNewExperience({
+                      ...newExperience,
+                      description: updatedDescription,
+                    });
+                  }}
+                  className="bg-red-500 p-2 rounded ml-2"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              onClick={() =>
+                setNewExperience({
+                  ...newExperience,
+                  description: [...newExperience.description, ""],
+                })
+              }
+              className="bg-green-500 p-2 rounded"
+            >
+              Add Description Line
+            </button>
+          </div>
+
+          <input
+            type="text"
+            placeholder="Duration"
+            value={newExperience.duration}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, duration: e.target.value })
+            }
+            className="w-full p-2 bg-gray-700 rounded mb-2"
+          />
+
+          <input
+            type="text"
+            placeholder="Role"
+            value={newExperience.role}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, role: e.target.value })
+            }
+            className="w-full p-2 bg-gray-700 rounded mb-2"
+          />
+
+          <button
+            onClick={handleSaveExperience}
+            className="p-2 bg-indigo-600 rounded"
+          >
+            {newExperience.id ? "Update Experience" : "Add Experience"}
+          </button>
+          {newExperience.id && (
+            <button
+              onClick={() =>
+                setNewProject({
+                  title: "",
+                  description: "",
+                  stack: "",
+                  liveLink: "",
+                })
+              }
+              className="p-2 bg-gray-500 rounded ml-2"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
