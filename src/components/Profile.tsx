@@ -1,9 +1,10 @@
 'use client';
 
+import { FiCheckCircle } from "react-icons/fi";
+import { TbDownload } from "react-icons/tb";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -80,12 +81,12 @@ export const Profile = () => {
         {
             name: "Github",
             link: `https://github.com/${profileData.github}`,
-            icon: <FaGithub className="size-4" />
+            icon: <FaGithub className="size-5 text-gray-800" />
         },
         {
             name: "LinkedIn",
             link: `https://www.linkedin.com/in/${profileData.linkedin}`,
-            icon: <FaLinkedin className="size-4" />
+            icon: <FaLinkedin className="size-5 text-gray-800" />
         }
     ];
 
@@ -98,12 +99,12 @@ export const Profile = () => {
                             width={150}
                             height={150}
                             quality={100}
-                            src="/avatar.svg" // Replace with dynamic image URL if needed
+                            src="/avatar.png" // Replace with dynamic image URL if needed
                             alt="Profile Picture"
                             className="rounded-full size-12 md:w-full h-auto object-cover border-2"
                         />
                         <div className="flex flex-col items-start justify-center">
-                            <h1 className="font-bold md:mt-4 text-xl md:text-2xl">
+                            <h1 className="font-bold text-myBlack md:mt-4 text-xl md:text-2xl">
                                 {profileData.name}
                             </h1>
                             <p className="text-sm md:text-base text-muted-foreground">
@@ -114,13 +115,27 @@ export const Profile = () => {
                     <p className="mt-2 text-start text-sm text-muted-foreground">
                         {profileData.description}
                     </p>
-                    <Button className="mt-4 w-full" asChild>
+
+                    <Button className="w-full mt-2 py-3 px-4 text-sm tracking-wide rounded-lg  border-2 border-gray-800 bg-white hover:text-white hover:bg-gray-800 text-gray-800 focus:outline-none"
+                    >
                         <Link
                             target="_blank"
-                            href="/resume.pdf" // Replace with dynamic resume URL if needed
-                            className="font-semibold"
+                            href="mailto:pandeytanishk@gmail.com?subject=Hey Tanishk I saw your Resume, Let's discuss"
+                            className="font-semibold flex gap-2 items-center"
                         >
-                            CONTACT ME
+                            <FiCheckCircle />
+                            Hire Me
+                        </Link>
+                    </Button>
+                    <Button className="w-full mt-2 py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-gray-800 hover:bg-gray-700 focus:outline-none"
+                    >
+                        <Link
+                            target="_blank"
+                            href={profileData.resume}
+                            className="font-semibold flex gap-2 items-center"
+                        >
+                            <TbDownload />
+                            Download CV
                         </Link>
                     </Button>
                     <div className="mt-4 flex flex-col space-y-2 border-t border-border pt-4 w-full">

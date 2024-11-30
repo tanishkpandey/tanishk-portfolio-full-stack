@@ -41,7 +41,7 @@ export const Experience = () => {
         // Skeleton Loader
         return (
             <>
-                <h2 className="text-xl font-bold mb-4">Work Experience</h2>
+                <h2 className="text-xl font-bold text-myBlack mb-4">Work Experience</h2>
                 <Card>
                     <CardContent className="pt-6">
                         <div className="space-y-8">
@@ -68,7 +68,7 @@ export const Experience = () => {
 
     return (
         <>
-            <h2 className="text-xl font-bold mb-4">Work Experience</h2>
+            <h2 className="text-xl text-myBlack font-bold mb-4">Work Experience</h2>
             <Card>
                 <CardContent className="pt-6">
                     <div className="space-y-8">
@@ -77,7 +77,7 @@ export const Experience = () => {
                                 {/* Job Details */}
                                 <div className="flex items-center space-x-4">
                                     <div>
-                                        <h3 className="font-semibold">
+                                        <h3 className="font-semibold text-myBlack">
                                             {exp.role}
                                         </h3>
                                         <p className="text-sm text-muted-foreground">
@@ -85,13 +85,13 @@ export const Experience = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <p className="text-xs text-muted-foreground mt-2 flex items-center">
+                                <p className="text-xs text-muted-foreground my-2 flex items-center">
                                     <CalendarDays className="size-3 mr-2" />
                                     {exp.duration}
                                 </p>
                                 <ul>
                                     {exp.description && exp.description.map((item, index) => (
-                                        <li key={index}>{item}</li>
+                                        <li className="text-sm text-gray-500" key={index}>{item}</li>
                                     ))}
                                 </ul>
 

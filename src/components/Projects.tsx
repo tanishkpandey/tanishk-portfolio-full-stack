@@ -1,8 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { ExternalLink } from "lucide-react";
+import { LuExternalLink } from "react-icons/lu";
 import { useState, useEffect } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,7 +46,7 @@ export const Projects = () => {
         // Skeleton Loader
         return (
             <>
-                <h2 className="text-xl font-bold mb-4">Featured Projects</h2>
+                <h2 className="text-xl font-bold text-myBlack mb-4">Featured Projects</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     {[...Array(4)].map((_, i) => (
                         <Card key={i}>
@@ -74,7 +73,7 @@ export const Projects = () => {
 
     return (
         <>
-            <h2 className="text-xl font-bold mb-4">Featured Projects</h2>
+            <h2 className="text-xl font-bold text-myBlack mb-4">Featured Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {projects.map((p) => (
                     <Card key={p.id}>
@@ -84,7 +83,7 @@ export const Projects = () => {
                                 <Link
                                     href={p.liveLink}
                                     target="_blank"
-                                    className="font-semibold text-primary hover:underline"
+                                    className="font-semibold text-myBlack text-primary hover:underline"
                                 >
                                     {p.title}
                                 </Link>
@@ -94,25 +93,13 @@ export const Projects = () => {
                                 </p>
                                 {/* Footer */}
                                 <div className="mt-auto flex items-center justify-between">
-                                    <div className="flex items-center space-x-2">
-                                        <div
-                                            className={cn(
-                                                "size-4 rounded-full",
-                                                techColors[p.stack.split(",")[0] as keyof typeof techColors] ||
-                                                    "bg-gray-400" // Default color
-                                            )}
-                                        />
-                                        <span className="text-xs font-medium text-muted-foreground">
-                                            {p.stack}
-                                        </span>
-                                    </div>
                                     <Link
                                         href={p.liveLink}
                                         target="_blank"
-                                        className="flex items-center gap-2 text-sm text-primary hover:underline"
+                                        className="flex items-center text-myBlack underline gap-2 text-sm text-primary hover:underline"
                                     >
                                         View Project
-                                        <ExternalLink className="inline-block size-3" />
+                                        <LuExternalLink />
                                     </Link>
                                 </div>
                             </div>

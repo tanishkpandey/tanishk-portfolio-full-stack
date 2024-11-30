@@ -12,11 +12,17 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 import AdminNavbar from "@/components/AdminNavbar";
-
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { BiSolidEdit } from "react-icons/bi";
+import { RiAddCircleLine } from "react-icons/ri";
+import { RiDeleteBin3Line } from "react-icons/ri";
+import { MdOutlineCancel } from "react-icons/md";
+import { GoListUnordered } from "react-icons/go";
 const AdminPanelContent = () => {
   const [profile, setProfile] = useState({});
   const [about, setAbout] = useState("");
   const [experience, setExperience] = useState([]);
+  const [add, setAdd] = useState("")
 
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
@@ -34,6 +40,9 @@ const AdminPanelContent = () => {
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
   const [editingSkillIndex, setEditingSkillIndex] = useState(null);
+  const [addProjectVisible, setAddProjectVisible] = useState(false);
+  const [addSkillsVisible, setAddSkillsVisible] = useState(false);
+  const [addExpVisible, setAddExpVisible] = useState(false);
 
   // Fetch data from all collections on component mount
   useEffect(() => {
@@ -122,6 +131,7 @@ const AdminPanelContent = () => {
   };
 
   const handleEditProject = (project) => {
+    setAddProjectVisible(true)
     setNewProject({ ...project });
   };
 
@@ -233,350 +243,397 @@ const AdminPanelContent = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-900 text-white min-h-screen">
+    <div className="p-6 bg-gray-50  min-h-screen">
       <AdminNavbar />
 
-      {/* Profile Section */}
-      <div>
-        <h2 className="text-2xl font-bold">Profile</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={profile.name || ""}
-          onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Role"
-          value={profile.role || ""}
-          onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={profile.description || ""}
-          onChange={(e) =>
-            setProfile({ ...profile, description: e.target.value })
-          }
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Github"
-          value={profile.github || ""}
-          onChange={(e) => setProfile({ ...profile, github: e.target.value })}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <input
-          type="text"
-          placeholder="LinkedIn"
-          value={profile.linkedin || ""}
-          onChange={(e) => setProfile({ ...profile, linkedin: e.target.value })}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <input
-          type="email"
-          placeholder="Contact Email"
-          value={profile.email || ""}
-          onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <button
-          onClick={handleSaveProfile}
-          className="mt-4 bg-blue-500 p-2 rounded"
-        >
-          Save Profile
-        </button>
-      </div>
-
-      {/* About Section */}
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold">About</h2>
-        <textarea
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
-          className="p-2 bg-gray-700 rounded w-full mt-2"
-        />
-        <button
-          onClick={handleSaveAbout}
-          className="mt-4 bg-blue-500 p-2 rounded"
-        >
-          Save About
-        </button>
-      </div>
-
-      {/* Projects Section */}
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold">Projects</h2>
-        {projects.map((proj) => (
-          <div key={proj.id} className="flex justify-between items-center">
-            <p>{proj.title}</p>
-            <div>
-              <button
-                onClick={() => handleEditProject(proj)}
-                className="bg-yellow-500 p-2 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteProject(proj.id)}
-                className="bg-red-500 p-2 rounded ml-2"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-
-        {/* Project Form */}
-        <div className="mt-4">
-          <h3 className="text-xl font-semibold">
-            {newProject.id ? "Edit Project" : "Add Project"}
-          </h3>
-          <input
-            type="text"
-            placeholder="Title"
-            value={newProject.title}
-            onChange={(e) =>
-              setNewProject({ ...newProject, title: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-          <textarea
-            placeholder="Description"
-            value={newProject.description}
-            onChange={(e) =>
-              setNewProject({ ...newProject, description: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-          <input
-            type="text"
-            placeholder="Tech Stack"
-            value={newProject.stack}
-            onChange={(e) =>
-              setNewProject({ ...newProject, stack: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-          <input
-            type="text"
-            placeholder="Live Link"
-            value={newProject.liveLink}
-            onChange={(e) =>
-              setNewProject({ ...newProject, liveLink: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-          <button
-            onClick={handleSaveProject}
-            className="p-2 bg-indigo-600 rounded"
-          >
-            {newProject.id ? "Update Project" : "Add Project"}
-          </button>
-          {newProject.id && (
-            <button
-              onClick={() =>
-                setNewProject({
-                  title: "",
-                  description: "",
-                  stack: "",
-                  liveLink: "",
-                })
+      <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Profile Section */}
+        <Card className="p-6 bg-white border rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
+          <CardContent>
+            <input
+              type="text"
+              placeholder="Name"
+              value={profile.name || ""}
+              onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Role"
+              value={profile.role || ""}
+              onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              value={profile.description || ""}
+              onChange={(e) =>
+                setProfile({ ...profile, description: e.target.value })
               }
-              className="p-2 bg-gray-500 rounded ml-2"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Skills Section */}
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold">Skills</h2>
-
-        {/* Display the list of skills */}
-        <ul className="list-disc pl-6 mb-4">
-          {skills.map((skill, index) => (
-            <li key={index} className="flex justify-between items-center">
-              <span>{skill}</span>
-              <div>
-                <button
-                  onClick={() => handleEditSkill(index)}
-                  className="bg-yellow-500 p-1 px-2 rounded mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteSkill(index)}
-                  className="bg-red-500 p-1 px-2 rounded"
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        {/* Add/Edit skill form */}
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="Enter a skill"
-            value={newSkill}
-            onChange={(e) => setNewSkill(e.target.value)}
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-          <button
-            onClick={handleSaveSkill}
-            className="p-2 bg-indigo-600 rounded"
-          >
-            {editingSkillIndex !== null ? "Update Skill" : "Add Skill"}
-          </button>
-          {editingSkillIndex !== null && (
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Github"
+              value={profile.github || ""}
+              onChange={(e) => setProfile({ ...profile, github: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="LinkedIn"
+              value={profile.linkedin || ""}
+              onChange={(e) => setProfile({ ...profile, linkedin: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="email"
+              placeholder="Contact Email"
+              value={profile.email || ""}
+              onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
             <button
-              onClick={handleCancelEdit}
-              className="p-2 bg-gray-500 rounded ml-2"
+              onClick={handleSaveProfile}
+              className="mt-5 bg-myBlack hover:bg-gray-700 text-white p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
             >
-              Cancel
+              Save Profile
             </button>
-          )}
-        </div>
-      </div>
+          </CardContent>
+        </Card>
 
-      {/* Experience Section */}
-      <div className="mt-6">
-        <h2 className="text-2xl font-bold">Experience</h2>
-        {experience.map((exp) => (
-          <div key={exp.id} className="flex justify-between items-center">
-            <p>
-              {exp.role} at {exp.company}
-            </p>
-            <div>
-              <button
-                onClick={() => handleEditExperience(exp)}
-                className="bg-yellow-500 p-2 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteExperience(exp.id)}
-                className="bg-red-500 p-2 rounded ml-2"
-              >
-                Delete
-              </button>
+
+
+        {/* About Section */}
+        <Card className="mt-6 p-6 bg-white border rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">About</h2>
+          <CardContent>
+            <textarea
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-2 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+              placeholder="Write something about yourself..."
+              rows={5} // Adjust rows as needed
+            />
+            <button
+              onClick={handleSaveAbout}
+              className="mt-4 bg-myBlack hover:bg-gray-700 text-white p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            >
+              Save About
+            </button>
+          </CardContent>
+        </Card>
+
+
+        {/* Projects Section */}
+        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-800">Projects</h2>
+              <div onClick={() => setAddProjectVisible((prev) => !prev)}>
+                {addProjectVisible === false ? <RiAddCircleLine className="size-5" /> : <MdOutlineCancel className="size-5" />}
+              </div>
             </div>
-          </div>
-        ))}
-
-        {/* Experience Form */}
-        <div className="mt-4">
-          <h3 className="text-xl font-semibold">
-            {newExperience.id ? "Edit Experience" : "Add Experience"}
-          </h3>
-
-          <input
-            type="text"
-            placeholder="Company"
-            value={newExperience.company}
-            onChange={(e) =>
-              setNewExperience({ ...newExperience, company: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
-
-          <div>
-            <h4 className="font-semibold mb-1">Description</h4>
-
-            {newExperience.description.map((line, index) => (
-              <div key={index} className="flex items-center mb-2">
-                <input
-                  type="text"
-                  value={line}
-                  onChange={(e) => {
-                    const updatedDescription = [...newExperience.description];
-                    updatedDescription[index] = e.target.value;
-                    setNewExperience({
-                      ...newExperience,
-                      description: updatedDescription,
-                    });
-                  }}
-                  className="w-full p-2 bg-gray-700 rounded"
-                />
-                <button
-                  onClick={() => {
-                    const updatedDescription = newExperience.description.filter(
-                      (_, i) => i !== index
-                    );
-                    setNewExperience({
-                      ...newExperience,
-                      description: updatedDescription,
-                    });
-                  }}
-                  className="bg-red-500 p-2 rounded ml-2"
-                >
-                  Remove
-                </button>
+          </CardHeader>
+          <CardContent>
+            {projects.map((proj) => (
+              <div key={proj.id} className="flex justify-between items-center mb-4">
+                <p className="text-gray-700 font-medium">{proj.title}</p>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleEditProject(proj)}
+                    className=" hover:text-gray-600 text-xl text-myBlack p-2 rounded-full"
+                  >
+                    <BiSolidEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProject(proj.id)}
+                    className=" hover:text-red-500 transition text-xl text-myBlack p-2 rounded-full"
+                  >
+                    <RiDeleteBin3Line />
+                  </button>
+                </div>
               </div>
             ))}
-            <button
-              onClick={() =>
-                setNewExperience({
-                  ...newExperience,
-                  description: [...newExperience.description, ""],
-                })
-              }
-              className="bg-green-500 p-2 rounded"
-            >
-              Add Description Line
-            </button>
-          </div>
+            {addProjectVisible && (
 
-          <input
-            type="text"
-            placeholder="Duration"
-            value={newExperience.duration}
-            onChange={(e) =>
-              setNewExperience({ ...newExperience, duration: e.target.value })
+              <div className="mt-4">
+                <h3 className="text-xl mb-2 font-semibold text-gray-800">
+                  {newProject.id ? "Edit Project" : "Add Project"}
+                </h3>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={newProject.title}
+                  onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
+                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                />
+                <textarea
+                  placeholder="Description"
+                  value={newProject.description}
+                  onChange={(e) =>
+                    setNewProject({ ...newProject, description: e.target.value })
+                  }
+                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Tech Stack"
+                  value={newProject.stack}
+                  onChange={(e) => setNewProject({ ...newProject, stack: e.target.value })}
+                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Live Link"
+                  value={newProject.liveLink}
+                  onChange={(e) =>
+                    setNewProject({ ...newProject, liveLink: e.target.value })
+                  }
+                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                />
+                <button
+                  onClick={handleSaveProject}
+                  className="p-3 bg-myBlack hover:bg-gray-700 text-white rounded-lg w-full"
+                >
+                  {newProject.id ? "Update Project" : "Add Project"}
+                </button>
+                {newProject.id && (
+                  <button
+                    onClick={() =>
+                      setNewProject({
+                        title: "",
+                        description: "",
+                        stack: "",
+                        liveLink: "",
+                      })
+                    }
+                    className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+
+        {/* Skills Section */}
+        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-800">Skills</h2>
+              <div onClick={() => setAddSkillsVisible((prev) => !prev)}>
+                {addSkillsVisible === false ? <RiAddCircleLine className="size-5" /> : <MdOutlineCancel className="size-5" />}
+              </div>
+            </div>          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-6">
+              {skills.map((skill, index) => (
+                <li
+                  key={index}
+                  className="flex justify-between items-center mb-2 text-gray-700"
+                >
+                  <span>{skill}</span>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleEditSkill(index)}
+                      className=" hover:text-gray-600 transition text-xl text-myBlack p-2 rounded-full"
+                    >
+                      <BiSolidEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSkill(index)}
+                      className=" hover:text-red-500 transition text-xl text-myBlack p-2 rounded-full"
+                    >
+                      <RiDeleteBin3Line />
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {
+              addSkillsVisible && (
+                <div className="mt-4">
+                  <input
+                    type="text"
+                    placeholder="Enter a skill"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  />
+                  <button
+                    onClick={handleSaveSkill}
+                    className="p-3 bg-myBlack hover:bg-gray-700 text-white rounded-lg w-full"
+                  >
+                    {editingSkillIndex !== null ? "Update Skill" : "Add Skill"}
+                  </button>
+                  {editingSkillIndex !== null && (
+                    <button
+                      onClick={handleCancelEdit}
+                      className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              )
             }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
 
-          <input
-            type="text"
-            placeholder="Role"
-            value={newExperience.role}
-            onChange={(e) =>
-              setNewExperience({ ...newExperience, role: e.target.value })
-            }
-            className="w-full p-2 bg-gray-700 rounded mb-2"
-          />
+          </CardContent>
+        </Card>
 
-          <button
-            onClick={handleSaveExperience}
-            className="p-2 bg-indigo-600 rounded"
-          >
-            {newExperience.id ? "Update Experience" : "Add Experience"}
-          </button>
-          {newExperience.id && (
-            <button
-              onClick={() =>
-                setNewProject({
-                  title: "",
-                  description: "",
-                  stack: "",
-                  liveLink: "",
-                })
-              }
-              className="p-2 bg-gray-500 rounded ml-2"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
+
+        {/* Experience Section */}
+        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-800">Experience</h2>
+              <div onClick={() => setAddExpVisible((prev) => !prev)}>
+                {addExpVisible === false ? <RiAddCircleLine className="size-5" /> : <MdOutlineCancel className="size-5" />}
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {experience.map((exp) => (
+              <div
+                key={exp.id}
+                className="flex justify-between items-center mb-4 text-gray-700"
+              >
+                <p>
+                  {exp.role} at {exp.company}
+                </p>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleEditExperience(exp)}
+                    className=" hover:text-gray-600 transition text-xl text-myBlack p-2 rounded-full"
+                  >
+                    <BiSolidEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteExperience(exp.id)}
+                    className=" hover:text-red-500 transition text-xl text-myBlack p-2 rounded-full"
+                  >
+                    <RiDeleteBin3Line />
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {addExpVisible && (
+              <div className="mt-4">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {newExperience.id ? "Edit Experience" : "Add Experience"}
+                </h3>
+                <input
+                  type="text"
+                  placeholder="Company"
+                  value={newExperience.company}
+                  onChange={(e) =>
+                    setNewExperience({ ...newExperience, company: e.target.value })
+                  }
+                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                />
+
+                <div>
+                  <h4 className="font-semibold mb-1">Description</h4>
+                  {newExperience.description.map((line, index) => (
+                    <div key={index} className="flex items-center mb-2">
+                      <input
+                        type="text"
+                        value={line}
+                        onChange={(e) => {
+                          const updatedDescription = [...newExperience.description];
+                          updatedDescription[index] = e.target.value;
+                          setNewExperience({
+                            ...newExperience,
+                            description: updatedDescription,
+                          });
+                        }}
+                        className="w-full p-3 bg-gray-100 border rounded-lg"
+                      />
+                      <button
+                        onClick={() => {
+                          const updatedDescription = newExperience.description.filter(
+                            (_, i) => i !== index
+                          );
+                          setNewExperience({
+                            ...newExperience,
+                            description: updatedDescription,
+                          });
+                        }}
+                        className="hover:text-red-500 ml-2 transition text-xl text-myBlack p-2 rounded-full"
+                      >
+                        <RiDeleteBin3Line />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="flex justify-center my-2">
+                    <button
+                      onClick={() =>
+                        setNewExperience({
+                          ...newExperience,
+                          description: [...newExperience.description, ""],
+                        })
+                      }
+                      className="p-3 flex justify-center gap-2 items-center bg-myBlack hover:bg-gray-700 text-white rounded-lg w-full"
+                    >
+                      <GoListUnordered className="size-5" />
+                      Add Point
+                    </button>
+                  </div>
+                </div>
+
+
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Duration"
+                    value={newExperience.duration}
+                    onChange={(e) =>
+                      setNewExperience({ ...newExperience, duration: e.target.value })
+                    }
+                    className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Role"
+                    value={newExperience.role}
+                    onChange={(e) =>
+                      setNewExperience({ ...newExperience, role: e.target.value })
+                    }
+                    className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  />
+                  <button
+                    onClick={handleSaveExperience}
+                    className="p-3 flex justify-center gap-2 items-center bg-myBlack hover:bg-gray-700 text-white rounded-lg w-full"
+                  >
+                    {newExperience.id ? "Update Experience" : "Add Experience"}
+                  </button>
+                  {newExperience.id && (
+                    <button
+                      onClick={() =>
+                        setNewExperience({
+                          company: "",
+                          description: [],
+                          duration: "",
+                          role: "",
+                        })
+                      }
+                      className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

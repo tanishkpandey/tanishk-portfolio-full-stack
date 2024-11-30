@@ -1,39 +1,33 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
 import { auth } from "@/app/firebase/config";
 
 const AdminNavbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      // Clear user token from cookies
       document.cookie =
         "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      location.reload(); // Reload the page after logout
+      location.reload();
+      toast.success("Logout successful!");
     } catch (error) {
+      toast.error(error.message || "Failed to logout. Please try again.");
       console.error("Logout error:", error.message);
     }
   };
 
   return (
-    <nav className="bg-gray-900 text-white p-6 flex items-center justify-between">
+    <nav className="bg-white shadow mb-5 text-gray-800 p-6 flex items-center justify-between rounded-b-lg">
       {/* Left Section: Branding or Title */}
       <div>
-        <h2 className="text-2xl font-bold">Tanishk's Dashboard</h2>
+        <h2 className="text-2xl font-bold tracking-wide">
+          Tanishk
+        </h2>
       </div>
 
       {/* Right Section: Navigation Links and Logout */}
       <div className="flex items-center space-x-4">
-        <Link href="/dashboard" className="text-lg hover:underline">
-          Dashboard
-        </Link>
-        <Link href="/settings" className="text-lg hover:underline">
-          Settings
-        </Link>
         <button
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow-md hover:shadow-lg transition-all"
           onClick={handleLogout}
         >
           Logout

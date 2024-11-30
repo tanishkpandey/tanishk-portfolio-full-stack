@@ -42,7 +42,7 @@ export const AboutMe = () => {
     return (
         <>
             {loading ? (
-                <Card className="mb-6">
+                <Card className="mb-6 hover:shadow">
                     <CardHeader>
                         <CardTitle>About Me</CardTitle>
                     </CardHeader>

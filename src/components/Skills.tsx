@@ -58,7 +58,7 @@ export const Skills = () => {
                     // Render Skills as Badges
                     <div className="flex flex-wrap gap-2">
                         {skills.map((skill, index) => (
-                            <Badge key={index} variant="secondary">
+                            <Badge key={index} className="text-myBlack" variant="secondary">
                                 {skill}
                             </Badge>
                         ))}
