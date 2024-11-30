@@ -8,13 +8,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { db } from "@/app/firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 
-const techColors = {
-    "React": "bg-blue-500",
-    "React Native": "bg-green-500",
-    "Vue.js": "bg-purple-500",
-    "Python": "bg-yellow-500",
-};
-
 export const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);

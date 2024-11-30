@@ -22,7 +22,6 @@ const AdminPanelContent = () => {
   const [profile, setProfile] = useState({});
   const [about, setAbout] = useState("");
   const [experience, setExperience] = useState([]);
-  const [add, setAdd] = useState("")
 
   const [projects, setProjects] = useState([]);
   const [newProject, setNewProject] = useState({
