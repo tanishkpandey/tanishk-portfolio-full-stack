@@ -1,7 +1,16 @@
+import Image from "next/image";
+
 const SignUp = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <img src="/NotGonnaHappen.gif" className="rounded-lg shadow-md hover:shadow-lg" alt="Not Gonna Happen Gif" />
+      <Image
+        src="/NotGonnaHappen.gif"
+        alt="Not Gonna Happen Gif"
+        className="rounded-lg shadow-md hover:shadow-lg"
+        layout="intrinsic"
+        width={500}
+        height={300}
+      />
     </div>
   );
 };

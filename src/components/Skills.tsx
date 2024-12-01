@@ -11,12 +11,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
 import { db } from "@/app/firebase/config"; // Ensure Firebase is initialized
 
-interface MyData {
-    id: string;
-    name: string;
-}
-
-
 export const Skills = () => {
     const [skills, setSkills] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
