@@ -11,14 +11,24 @@ import { doc, getDoc } from "firebase/firestore";
 import { Badge } from "@/components/ui/badge"; // Ensure Badge is imported
 import { db } from "@/app/firebase/config"; // Ensure Firebase is initialized
 
+interface MyData {
+    id: string;
+    name: string;
+}
+
+
 export const Skills = () => {
-    const [skills, setSkills] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [skills, setSkills] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch the "Skills" content from Firestore
     useEffect(() => {
         const fetchSkills = async () => {
             try {
+                if (!db) {
+                    console.error("Error in firebase initialization")
+                    return;
+                }
                 const docRef = doc(db, "Skills", "W3xwilcBbb6XvU5al2it");
                 const docSnap = await getDoc(docRef);
 
@@ -54,10 +64,10 @@ export const Skills = () => {
                             ></div>
                         ))}
                     </div>
-                ) : skills.length > 0 ? (
+                ) : skills?.length > 0 ? (
                     // Render Skills as Badges
                     <div className="flex flex-wrap gap-2">
-                        {skills.map((skill, index) => (
+                        {skills?.map((skill, index) => (
                             <Badge key={index} className="text-myBlack" variant="secondary">
                                 {skill}
                             </Badge>
@@ -65,7 +75,7 @@ export const Skills = () => {
                     </div>
                 ) : (
                     // Fallback for no skills
-                    <p>No skills found.</p>
+                    <p>Add skills to the list.</p>
                 )}
             </CardContent>
         </Card>
