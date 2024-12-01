@@ -16,6 +16,8 @@ interface Profile {
     role?: string;
     description?: string;
     resume?: string;
+    github?: string;
+    linkedin?: string;
 }
 
 export const Profile = () => {
@@ -89,12 +91,12 @@ export const Profile = () => {
     const socials = [
         {
             name: "Github",
-            link: `https://github.com/${profileData.github}`,
+            link: `https://github.com/${profileData?.github}`,
             icon: <FaGithub className="size-5 text-gray-800" />
         },
         {
             name: "LinkedIn",
-            link: `https://www.linkedin.com/in/${profileData.linkedin}`,
+            link: `https://www.linkedin.com/in/${profileData?.linkedin}`,
             icon: <FaLinkedin className="size-5 text-gray-800" />
         }
     ];
