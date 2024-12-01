@@ -25,8 +25,9 @@ const SignIn = () => {
         toast.success("Sign-in successful!");
         router.push("/admin-panel");
       }
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to sign in. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = (error as { message?: string })?.message;
+      toast.error(errorMessage || "Failed to sign in. Please try again.");
     }
   };
 

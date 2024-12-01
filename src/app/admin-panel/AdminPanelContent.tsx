@@ -35,7 +35,7 @@ interface Project {
   description?: string;
   stack?: string;
   liveLink?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface Experience {

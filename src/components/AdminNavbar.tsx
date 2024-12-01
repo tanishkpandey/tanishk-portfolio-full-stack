@@ -10,9 +10,9 @@ const AdminNavbar = () => {
         "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       location.reload();
       toast.success("Logout successful!");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to logout. Please try again.");
-      console.error("Logout error:", error.message);
+    } catch (error: unknown) {
+      const errorMessage = (error as { message?: string })?.message;
+      toast.error(errorMessage || "Failed to logout. Please try again.");
     }
   };
 
