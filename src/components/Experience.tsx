@@ -1,26 +1,33 @@
 'use client';
 
 import { useEffect, useState } from "react";
-
 import { CalendarDays } from "lucide-react";
-
 import { Card, CardContent } from "@/components/ui/card";
-import { JobImages } from "@/components/JobImages";
-
 import { db } from "@/app/firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 
+interface Experience {
+    id?: string;
+    role?: string;
+    company?: string;
+    duration?: string;
+    description?: string[];
+}
+
 export const Experience = () => {
-    const [experiences, setExperiences] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [experiences, setExperiences] = useState<Experience[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch experiences from Firestore
     useEffect(() => {
         const fetchExperiences = async () => {
             try {
+                if(!db){
+                    console.error('Firebase has not been initialized')
+                    return;
+                }
                 const experienceCollection = collection(db, "Experience");
                 const experienceSnapshot = await getDocs(experienceCollection);
-
                 const fetchedExperiences = experienceSnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
@@ -33,7 +40,6 @@ export const Experience = () => {
                 setLoading(false);
             }
         };
-
         fetchExperiences();
     }, []);
 
@@ -74,7 +80,6 @@ export const Experience = () => {
                     <div className="space-y-8">
                         {experiences.map((exp) => (
                             <div key={exp.id} className="border-b last:border-b-0 pb-8 last:pb-0">
-                                {/* Job Details */}
                                 <div className="flex items-center space-x-4">
                                     <div>
                                         <h3 className="font-semibold text-myBlack">
@@ -94,17 +99,6 @@ export const Experience = () => {
                                         <li className="text-sm text-gray-500" key={index}>{item}</li>
                                     ))}
                                 </ul>
-
-                                <p className="text-sm mt-2">{ }</p>
-                                {/* Job Images */}
-                                {exp.images && exp.images.length > 0 && (
-                                    <JobImages
-                                        role={exp.role}
-                                        link={exp.link}
-                                        images={exp.images}
-                                        duration={exp.duration}
-                                    />
-                                )}
                             </div>
                         ))}
                     </div>

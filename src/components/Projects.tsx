@@ -3,22 +3,30 @@
 import Link from "next/link";
 import { LuExternalLink } from "react-icons/lu";
 import { useState, useEffect } from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { db } from "@/app/firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 
+interface Project {
+    id?: string;
+    title?: string;
+    description?: string;
+    liveLink?: string;
+}
 export const Projects = () => {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Fetch projects from Firestore
     useEffect(() => {
         const fetchProjects = async () => {
             try {
+                if (!db) {
+                    console.error("Firebase not initialized")
+                    return;
+                }
                 const projectsCollection = collection(db, "Projects");
                 const projectSnapshot = await getDocs(projectsCollection);
-
                 const fetchedProjects = projectSnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
@@ -73,13 +81,11 @@ export const Projects = () => {
                         <CardContent className="pt-6 h-full">
                             <div className="flex flex-col h-full">
                                 {/* Title */}
-                                <Link
-                                    href={p.liveLink}
-                                    target="_blank"
-                                    className="font-semibold text-myBlack text-primary hover:underline"
+                                <div
+                                    className="font-semibold  text-myBlack text-primary"
                                 >
                                     {p.title}
-                                </Link>
+                                </div>
                                 {/* Description */}
                                 <p className="text-sm text-muted-foreground mt-1 mb-4">
                                     {p.description}
@@ -87,7 +93,7 @@ export const Projects = () => {
                                 {/* Footer */}
                                 <div className="mt-auto flex items-center justify-between">
                                     <Link
-                                        href={p.liveLink}
+                                        href={p.liveLink || "#"}
                                         target="_blank"
                                         className="flex items-center text-myBlack underline gap-2 text-sm text-primary hover:underline"
                                     >

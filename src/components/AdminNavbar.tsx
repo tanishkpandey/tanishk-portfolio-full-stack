@@ -1,5 +1,6 @@
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
+import toast from "react-hot-toast";
 
 const AdminNavbar = () => {
   const handleLogout = async () => {
@@ -9,7 +10,7 @@ const AdminNavbar = () => {
         "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
       location.reload();
       toast.success("Logout successful!");
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.message || "Failed to logout. Please try again.");
       console.error("Logout error:", error.message);
     }

@@ -19,13 +19,17 @@ export const AboutMe = () => {
     useEffect(() => {
         const fetchAboutContent = async () => {
             try {
-                const docRef = doc(db, "About", "zj68ikIqsTCVdIBhIHuG"); // Use your document ID
+                if (!db) {
+                    console.error("Firebase has not been initialized.");
+                    return;
+                }
+                const docRef = doc(db, "About", "zj68ikIqsTCVdIBhIHuG"); 
                 const docSnap = await getDoc(docRef);
 
                 console.log(docSnap)
 
                 if (docSnap.exists()) {
-                    setAboutContent(docSnap.data().content); // Get the "content" field
+                    setAboutContent(docSnap.data().content); 
                 } else {
                     console.error("No such document in About collection!");
                 }
@@ -61,7 +65,7 @@ export const AboutMe = () => {
                     <CardContent>
                         <p className="text-muted-foreground">
                             {aboutContent}
-                        </p>    
+                        </p>
                     </CardContent>
                 </Card>
 

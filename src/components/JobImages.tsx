@@ -3,9 +3,7 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { useState } from "react";
-
 import { ExternalLink } from "lucide-react";
-
 import {
     Dialog,
     DialogTitle,
@@ -14,7 +12,6 @@ import {
     DialogContent,
     DialogDescription
 } from "@/components/ui/dialog";
-
 
 interface JobImagesProps {
     role: string;

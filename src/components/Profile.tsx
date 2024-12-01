@@ -6,27 +6,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import { db } from "@/app/firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 
+interface Profile {
+    name?: string;
+    role?: string;
+    description?: string;
+    resume?: string;
+}
+
 export const Profile = () => {
-    const [profileData, setProfileData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [profileData, setProfileData] = useState<Profile>({});
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch profile data from Firestore
     useEffect(() => {
         const fetchProfile = async () => {
             try {
+                if (!db) {
+                    console.error("F0irebase is not initialized.")
+                    return;
+                }
                 const docRef = doc(db, "Profile", "PArB5TcvuHEVztorw4LB");
                 const docSnap = await getDoc(docRef);
 
 
                 if (docSnap.exists()) {
-                    setProfileData(docSnap.data());
+                    setProfileData(docSnap?.data());
                 } else {
                     console.error("No such document!");
                 }
@@ -99,21 +108,21 @@ export const Profile = () => {
                             width={150}
                             height={150}
                             quality={100}
-                            src="/avatar.png" // Replace with dynamic image URL if needed
+                            src="/avatar.png"
                             alt="Profile Picture"
                             className="rounded-full size-12 md:w-full h-auto object-cover border-2"
                         />
                         <div className="flex flex-col items-start justify-center">
                             <h1 className="font-bold text-myBlack md:mt-4 text-xl md:text-2xl">
-                                {profileData.name}
+                                {profileData?.name}
                             </h1>
                             <p className="text-sm md:text-base text-muted-foreground">
-                                {profileData.role}
+                                {profileData?.role}
                             </p>
                         </div>
                     </div>
                     <p className="mt-2 text-start text-sm text-muted-foreground">
-                        {profileData.description}
+                        {profileData?.description}
                     </p>
 
                     <Button className="w-full mt-2 py-3 px-4 text-sm tracking-wide rounded-lg  border-2 border-gray-800 bg-white hover:text-white hover:bg-gray-800 text-gray-800 focus:outline-none"
@@ -127,11 +136,11 @@ export const Profile = () => {
                             Hire Me
                         </Link>
                     </Button>
-                    <Button className="w-full mt-2 py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-gray-800 hover:bg-gray-700 focus:outline-none"
+                    <Button className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-gray-800 hover:bg-gray-700 focus:outline-none"
                     >
                         <Link
                             target="_blank"
-                            href={profileData.resume}
+                            href={profileData.resume || "#"}
                             className="font-semibold flex gap-2 items-center"
                         >
                             <TbDownload />

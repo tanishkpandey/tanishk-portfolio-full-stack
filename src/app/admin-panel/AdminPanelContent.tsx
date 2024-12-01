@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import {
   collection,
   getDocs,
@@ -18,36 +18,68 @@ import { RiAddCircleLine } from "react-icons/ri";
 import { RiDeleteBin3Line } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 import { GoListUnordered } from "react-icons/go";
-const AdminPanelContent = () => {
-  const [profile, setProfile] = useState({});
-  const [about, setAbout] = useState("");
-  const [experience, setExperience] = useState([]);
 
-  const [projects, setProjects] = useState([]);
-  const [newProject, setNewProject] = useState({
+
+interface Profile {
+  name?: string;
+  role?: string;
+  description?: string;
+  github?: string;
+  linkedin?: string;
+  email?: string;
+}
+
+interface Project {
+  id?: string;
+  title?: string;
+  description?: string;
+  stack?: string;
+  liveLink?: string;
+  [key: string]: any;
+}
+
+interface Experience {
+  id?: string;
+  role?: string;
+  company?: string;
+  duration?: string;
+  description?: string[];
+}
+
+
+const AdminPanelContent = () => {
+  const [profile, setProfile] = useState<Profile>({});
+  const [about, setAbout] = useState<string>("");
+  const [experience, setExperience] = useState<Experience[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [newProject, setNewProject] = useState<Project>({
     title: "",
     description: "",
     stack: "",
     liveLink: "",
   });
-  const [newExperience, setNewExperience] = useState({
+  const [newExperience, setNewExperience] = useState<Experience>({
     role: "",
     company: "",
     duration: "",
     description: [""],
   });
-  const [skills, setSkills] = useState([]);
-  const [newSkill, setNewSkill] = useState("");
-  const [editingSkillIndex, setEditingSkillIndex] = useState(null);
-  const [addProjectVisible, setAddProjectVisible] = useState(false);
-  const [addSkillsVisible, setAddSkillsVisible] = useState(false);
-  const [addExpVisible, setAddExpVisible] = useState(false);
+  const [skills, setSkills] = useState<string[]>([]);
+  const [newSkill, setNewSkill] = useState<string>("");
+  const [editingSkillIndex, setEditingSkillIndex] = useState<number | null>(null);
+  const [addProjectVisible, setAddProjectVisible] = useState<boolean>(false);
+  const [addSkillsVisible, setAddSkillsVisible] = useState<boolean>(false);
+  const [addExpVisible, setAddExpVisible] = useState<boolean>(false);
 
   // Fetch data from all collections on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch Profile
+        if (!db) {
+          console.error("Firestore is not initialized.");
+          return;
+        }
         const profileSnapshot = await getDocs(collection(db, "Profile"));
         const profileData = profileSnapshot.docs[0]?.data() || {};
         setProfile(profileData);
@@ -88,6 +120,10 @@ const AdminPanelContent = () => {
   // Profile Save Handler
   const handleSaveProfile = async () => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       await setDoc(doc(db, "Profile", "PArB5TcvuHEVztorw4LB"), profile);
       alert("Profile updated successfully!");
     } catch (error) {
@@ -98,6 +134,10 @@ const AdminPanelContent = () => {
   // About Save Handler
   const handleSaveAbout = async () => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       await setDoc(doc(db, "About", "zj68ikIqsTCVdIBhIHuG"), {
         content: about,
       });
@@ -110,6 +150,10 @@ const AdminPanelContent = () => {
   // Add or Update Project
   const handleSaveProject = async () => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       if (newProject.id) {
         // Update Project
         const docRef = doc(db, "Projects", newProject.id);
@@ -129,13 +173,22 @@ const AdminPanelContent = () => {
     }
   };
 
-  const handleEditProject = (project) => {
+  const handleEditProject = (project: SetStateAction<Project>) => {
     setAddProjectVisible(true)
     setNewProject({ ...project });
   };
 
-  const handleDeleteProject = async (id) => {
+  const handleDeleteProject = async (id: string | undefined) => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
+
+      if (!id) {
+        throw new Error("Document ID is required.");
+      }
+
       await deleteDoc(doc(db, "Projects", id));
       setProjects(projects.filter((proj) => proj.id !== id));
       alert("Project deleted successfully!");
@@ -162,6 +215,10 @@ const AdminPanelContent = () => {
     }
 
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       // Save updated skills to Firebase
       await setDoc(doc(db, "Skills", "W3xwilcBbb6XvU5al2it"), {
         Skills: updatedSkills,
@@ -180,15 +237,19 @@ const AdminPanelContent = () => {
     setEditingSkillIndex(null); // Reset editing state
   };
 
-  const handleEditSkill = (index) => {
+  const handleEditSkill = (index: number) => {
     setNewSkill(skills[index]); // Set the input to the selected skill
     setEditingSkillIndex(index); // Track the index of the skill being edited
   };
 
-  const handleDeleteSkill = async (index) => {
+  const handleDeleteSkill = async (index: number) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
 
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       // Save updated skills to Firebase
       await setDoc(doc(db, "Skills", "W3xwilcBbb6XvU5al2it"), {
         Skills: updatedSkills,
@@ -203,6 +264,10 @@ const AdminPanelContent = () => {
   // Add or Update Experience
   const handleSaveExperience = async () => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
       if (newExperience.id) {
         // Update Experience
         const docRef = doc(db, "Experience", newExperience.id);
@@ -211,6 +276,10 @@ const AdminPanelContent = () => {
           prev.map((exp) => (exp.id === newExperience.id ? newExperience : exp))
         );
       } else {
+        if (!db) {
+          console.error("Error in firebase initialization")
+          return;
+        }
         // Add New Experience
         const docRef = await addDoc(collection(db, "Experience"), {
           ...newExperience,
@@ -229,10 +298,17 @@ const AdminPanelContent = () => {
     }
   };
 
-  const handleEditExperience = (exp) => setNewExperience(exp);
+  const handleEditExperience = (exp: SetStateAction<Experience>) => setNewExperience(exp);
 
-  const handleDeleteExperience = async (id) => {
+  const handleDeleteExperience = async (id: string | undefined) => {
     try {
+      if (!db) {
+        console.error("Error in firebase initialization")
+        return;
+      }
+      if (!id) {
+        throw new Error("Document ID is required.");
+      }
       await deleteDoc(doc(db, "Experience", id));
       setExperience(experience.filter((exp) => exp.id !== id));
       alert("Experience deleted successfully!");
@@ -539,13 +615,13 @@ const AdminPanelContent = () => {
 
                 <div>
                   <h4 className="font-semibold mb-1">Description</h4>
-                  {newExperience.description.map((line, index) => (
+                  {newExperience?.description?.map((line, index) => (
                     <div key={index} className="flex items-center mb-2">
                       <input
                         type="text"
                         value={line}
                         onChange={(e) => {
-                          const updatedDescription = [...newExperience.description];
+                          const updatedDescription = [...newExperience.description ?? []];
                           updatedDescription[index] = e.target.value;
                           setNewExperience({
                             ...newExperience,
@@ -556,7 +632,7 @@ const AdminPanelContent = () => {
                       />
                       <button
                         onClick={() => {
-                          const updatedDescription = newExperience.description.filter(
+                          const updatedDescription = newExperience?.description?.filter(
                             (_, i) => i !== index
                           );
                           setNewExperience({
@@ -575,9 +651,10 @@ const AdminPanelContent = () => {
                       onClick={() =>
                         setNewExperience({
                           ...newExperience,
-                          description: [...newExperience.description, ""],
+                          description: [...(newExperience.description ?? []), ""],
                         })
                       }
+
                       className="p-3 flex justify-center gap-2 items-center bg-myBlack hover:bg-gray-700 text-white rounded-lg w-full"
                     >
                       <GoListUnordered className="size-5" />

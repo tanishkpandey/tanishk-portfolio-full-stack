@@ -8,9 +8,10 @@ import { toast } from "react-hot-toast";
 import { LuMoveLeft } from "react-icons/lu";
 import Link from "next/link";
 
+
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
@@ -18,13 +19,14 @@ const SignIn = () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
 
-      if (res.user) {
-        document.cookie = `userToken=${res.user.accessToken}; path=/;`;
+      if (res && res?.user) {
+        const token = await res.user.getIdToken();
+        document.cookie = `userToken=${token}; path=/;`;
         toast.success("Sign-in successful!");
         router.push("/admin-panel");
       }
-    } catch (error) {
-      toast.error(error.message || "Failed to sign in. Please try again.");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to sign in. Please try again.");
     }
   };
 
