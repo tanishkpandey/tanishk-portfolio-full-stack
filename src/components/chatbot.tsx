@@ -45,13 +45,21 @@ const Chatbot: React.FC = () => {
     }, 1200); // Simulate delay for a more natural experience
   };
 
+  // Handle Enter key press to send message
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
   return (
-    <div className="fixed bottom-5 right-5 flex flex-col items-end">
+    <div className="fixed bottom-8 right-8 flex flex-col items-end">
       {/* Floating Button to Open Chatbot */}
       {!isOpen && (
         <button
           className="bg-[#1f2937] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
           onClick={() => setIsOpen(true)}
+          style={{ marginBottom: "-200px" }}
         >
           <ChatBubbleLeftEllipsisIcon className="w-7 h-7" />
         </button>
@@ -88,7 +96,7 @@ const Chatbot: React.FC = () => {
 
           {/* Typing Animation */}
           {isTyping && (
-            <div className="text-sm p- bg-gray-200 text-gray-900 self-start rounded-lg max-w-[80%] flex items-center">
+            <div className="text-sm p-2 bg-gray-200 text-gray-900 self-start rounded-lg max-w-[80%] flex items-center">
               <span className="animate-bounce">.</span>
               <span className="animate-bounce delay-100">.</span>
               <span className="animate-bounce delay-200">.</span>
@@ -106,13 +114,14 @@ const Chatbot: React.FC = () => {
             className="text-sm flex-1 border-none outline-none px-3 py-2 text-gray-700"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            onKeyDown={handleKeyPress} // Handle Enter key press
             placeholder="Type a message..."
           />
           <button
             onClick={handleSendMessage}
             className="p-2 bg-[#1f2937] text-white rounded-full hover:bg-gray-800 transition"
           >
-            <PaperAirplaneIcon className="w-5 h-5 rotate-90" />
+            <PaperAirplaneIcon className="w-5 h-5" />
           </button>
         </div>
       </div>
