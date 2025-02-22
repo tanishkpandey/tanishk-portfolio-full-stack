@@ -1,101 +1,125 @@
 # Full Stack Portfolio
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and built using **TypeScript**, **Tailwind CSS**, and **Firebase**.
+This is a **Next.js** project built with **TypeScript**, **Tailwind CSS**, and **Firebase**, designed for a dynamic and scalable portfolio.
 
-## Features
+## 🚀 Features
 
-- **Frontend**: Built with Next.js and TypeScript for a seamless user experience and scalability.
-  - Includes a dynamic resume section that users can view.
-  - Admin users can log in to modify resume content dynamically.
-  - Styled with Tailwind CSS for a modern and responsive design.
+### **Frontend**
+- Built with **Next.js** and **TypeScript** for performance and scalability.
+- Dynamic **resume section** for visitors.
+- **Admin authentication** to modify content.
+- Styled with **Tailwind CSS** for a responsive UI.
 
-- **Backend**: Powered by Firebase.
-  - Secure authentication for admin users.
-  - Real-time database integration for dynamic content updates.
+### **Backend**
+- **Firebase Authentication** for secure admin login.
+- **Firestore Database** for real-time content updates.
 
-## Getting Started
+---
 
-### Prerequisites
+## 📌 Getting Started
 
-Before running this project locally, ensure you have the following installed:
-
+### **🔧 Prerequisites**
+Ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v16 or later)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) package manager
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-### Local Setup
+---
 
-1. **Clone the repository**:
+### **📂 Local Setup**
 
-   ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
-   ```
+1️⃣ **Clone the repository**
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+```
 
-2. **Install dependencies**:
+2️⃣ **Install dependencies**
+```bash
+npm install
+# or
+yarn install
+```
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+3️⃣ **Set up environment variables**
+- Create a **Firebase project** in the [Firebase Console](https://console.firebase.google.com/).
+- Enable **Authentication** & **Firestore Database**.
+- **Create a `.env.local` file** and add the necessary credentials.
+  
+```env
+# Firebase Credentials
+NEXT_PUBLIC_FIREBASE_API_KEY=""
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=""
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=""
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
+NEXT_PUBLIC_FIREBASE_APP_ID=""
 
-3. **Set up Firebase**:
+# Dialogflow Credentials
+GOOGLE_PROJECT_ID=""
+GOOGLE_PRIVATE_KEY_ID=""
+GOOGLE_PRIVATE_KEY=""
+GOOGLE_CLIENT_EMAIL=""
+GOOGLE_CLIENT_X509_CERT_URL=""
 
-   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-   - Enable Authentication and Database in your Firebase project.
-   - Create a `.env.local` file in the root directory and add the following:
+# Google OAuth Credentials
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+GOOGLE_REFRESH_TOKEN=""
+```
 
-     ```env
-     NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
-     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-auth-domain
-     NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-     NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
-     ```
+4️⃣ **Run the development server**
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-   Replace the placeholders with your Firebase project credentials.
+5️⃣ **Access the app locally**
+- Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-4. **Run the development server**:
+---
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+## 👨‍💻 Admin Access
 
-5. **Access the app locally**:
+To log in as an **admin**, set up an account via **Firebase Authentication** and configure admin privileges in Firestore.
 
-   Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+---
 
-### Admin Login
+## 💡 Technologies Used
 
-To log in as an admin:
+- 🚀 **Next.js** → Optimized React framework  
+- 🛠️ **TypeScript** → Type safety & scalability  
+- 🎨 **Tailwind CSS** → Modern styling & responsiveness  
+- 🔥 **Firebase** → Authentication & real-time database  
+- 💬 **Dialogflow** → AI-powered chatbot integration  
 
-- Use Firebase Authentication to create an admin user.
-- Log in using the credentials you set up in the Firebase console.
-- Once logged in, you can modify the resume content dynamically.
+---
 
-## Technologies Used
+## 🚀 Deployment
 
-- **Next.js**: Framework for building server-rendered React applications with TypeScript support.
-- **TypeScript**: For type safety and maintainable code.
-- **Tailwind CSS**: For efficient styling and responsive design.
-- **Firebase**: For authentication and real-time database functionality.
+Deploy the app seamlessly with **Vercel**:  
+📌 Follow [Next.js deployment guide](https://nextjs.org/docs/app/building-your-application/deploying).  
 
-## Learn More
+---
 
-To learn more about the technologies used in this project, check out the following resources:
+## 🛠️ Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [Firebase Documentation](https://firebase.google.com/docs)
+Contributions are welcome! To contribute:
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature-name`)
+3. **Commit changes** (`git commit -m "Added new feature"`)
+4. **Push to GitHub** (`git push origin feature-name`)
+5. **Open a pull request** 🚀
 
-## Deployment
+---
 
-The easiest way to deploy this project is using [Vercel](https://vercel.com). Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for detailed instructions.
+## 📖 Learn More
 
-## Contributing
+📚 [Next.js Docs](https://nextjs.org/docs)  
+🎨 [Tailwind CSS Docs](https://tailwindcss.com/docs)  
+💬 [Dialogflow Docs](https://cloud.google.com/dialogflow/docs)  
+🔥 [Firebase Docs](https://firebase.google.com/docs)  
 
-Contributions are welcome! Please fork this repository and submit a pull request with your changes. Ensure your changes align with the project's purpose and coding standards.
+---
+
+🔥 **Pro Tip:** Never expose `.env.local` credentials in public repositories. Use **GitHub Secrets** or `.gitignore` to keep them secure.  
