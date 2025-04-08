@@ -22,16 +22,15 @@ export const Experience = () => {
     useEffect(() => {
         const fetchExperiences = async () => {
             try {
-                if(!db){
-                    console.error('Firebase has not been initialized')
-                    return;
-                }
                 const experienceCollection = collection(db, "Experience");
                 const experienceSnapshot = await getDocs(experienceCollection);
-                const fetchedExperiences = experienceSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+                
+                const fetchedExperiences = experienceSnapshot.docs
+                    .map((doc) => ({
+                        id: doc.id,
+                        ...(doc.data() as Omit<Experience, "id">),
+                    }))
+                    .reverse(); // Reverse to show latest first
 
                 setExperiences(fetchedExperiences);
             } catch (error) {
@@ -51,7 +50,7 @@ export const Experience = () => {
                 <Card>
                     <CardContent className="pt-6">
                         <div className="space-y-8">
-                            {[...Array(3)].map((_, i) => (
+                            {Array.from({ length: 3 }).map((_, i) => (
                                 <div key={i} className="border-b last:border-b-0 pb-8 last:pb-0">
                                     <div className="animate-pulse">
                                         {/* Role and Company */}
@@ -95,8 +94,10 @@ export const Experience = () => {
                                     {exp.duration}
                                 </p>
                                 <ul>
-                                    {exp.description && exp.description.map((item, index) => (
-                                        <li className="text-sm text-gray-500" key={index}>{item}</li>
+                                    {Array.isArray(exp.description) && exp.description.map((item, index) => (
+                                        <li className="text-sm text-gray-500" key={index}>
+                                            {item}
+                                        </li>
                                     ))}
                                 </ul>
                             </div>

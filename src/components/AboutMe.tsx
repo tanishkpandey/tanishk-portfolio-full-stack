@@ -63,7 +63,7 @@ export const AboutMe = () => {
                         <CardTitle>About Me</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-[14px]">
                             {aboutContent}
                         </p>
                     </CardContent>

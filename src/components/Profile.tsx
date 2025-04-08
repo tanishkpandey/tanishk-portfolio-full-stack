@@ -15,9 +15,10 @@ interface Profile {
     name?: string;
     role?: string;
     description?: string;
-    resume?: string;
     github?: string;
     linkedin?: string;
+    resume?: string;
+    userImage?: string;
 }
 
 export const Profile = () => {
@@ -106,6 +107,7 @@ export const Profile = () => {
             <CardContent className="pt-6">
                 <div className="flex flex-col items-start gap-2">
                     <div className="flex flex-row md:flex-col items-center md:items-start w-full gap-4">
+                   
                         <Image
                             width={150}
                             height={150}

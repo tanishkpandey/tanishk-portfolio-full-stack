@@ -27,6 +27,8 @@ interface Profile {
   github?: string;
   linkedin?: string;
   email?: string;
+  resume?: string;
+  userImage?: string;
 }
 
 interface Project {
@@ -368,6 +370,20 @@ const AdminPanelContent = () => {
               placeholder="Contact Email"
               value={profile.email || ""}
               onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Resume Link"
+              value={profile.resume || ""}
+              onChange={(e) => setProfile({ ...profile, resume: e.target.value })}
+              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Profile Picture Link"
+              value={profile.userImage || ""}
+              onChange={(e) => setProfile({ ...profile, userImage: e.target.value })}
               className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
             />
             <button
