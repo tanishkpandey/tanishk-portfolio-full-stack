@@ -3,6 +3,7 @@ import { geistSans, geistMono } from "./fonts/fonts"
 import { constructMetadata } from "@/lib/metadata"
 import { Toaster } from "react-hot-toast"
 import { NavbarWrapper } from "@/components/NavbarWrapper"
+import { FooterWrapper } from "@/components/FooterWrapper"
 
 export const metadata = constructMetadata()
 
@@ -18,6 +19,7 @@ export default function RootLayout({
           <NavbarWrapper />
           <Toaster position="top-center" reverseOrder={false} />
           {children}
+          <FooterWrapper />
         </main>
       </body>
     </html>

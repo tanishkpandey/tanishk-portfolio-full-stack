@@ -18,8 +18,8 @@ export default function Home() {
           {/* Main content */}
           <main className="md:col-span-2 space-y-10">
             <AboutMe />
-            <Projects />
             <Experience />
+            <Projects />
           </main>
         </div>
       </div>
