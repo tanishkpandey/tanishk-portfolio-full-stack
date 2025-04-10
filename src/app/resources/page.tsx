@@ -250,13 +250,23 @@ const ResourcesPage = () => {
   })
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl text-myBlack font-bold mb-8">Resources</h1>
-
+    <div className="container mx-auto py-12">
       {/* Search and view options */}
       <div className="mb-8">
         <Card>
-          <CardContent className="pt-6 pb-6">
+          <CardHeader>
+            <h1 className="text-3xl text-myBlack font-bold mb-3">Resources</h1>
+
+            <CardContent>
+              <p className="text-muted-foreground text-[14px] -ml-5">
+                Here's a collection of my go-to resources that I use in my
+                projects. <br /> Feel free to explore and grab anything you find
+                useful — they’re all handpicked with 💖!
+              </p>
+            </CardContent>
+          </CardHeader>
+
+          <CardContent className="-mt-6 pb-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               {/* Search */}
               <div className="w-full md:w-1/2">
@@ -265,7 +275,7 @@ const ResourcesPage = () => {
                   <input
                     type="text"
                     placeholder="Search resources..."
-                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-10 text-[14px] pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -273,6 +283,7 @@ const ResourcesPage = () => {
               </div>
 
               {/* View options */}
+
               <div className="flex items-center space-x-4">
                 <button
                   className={`p-2 rounded-md transition ${
@@ -294,184 +305,180 @@ const ResourcesPage = () => {
                 </button>
               </div>
             </div>
+
+            {/* Catagories */}
+            <div className=" mt-8 text-[14px] overflow-x-auto">
+              {loading ? (
+                <div className="flex space-x-2 min-w-max pb-2 animate-pulse">
+                  <div className="flex items-center px-5 py-4 border shadow rounded-lg bg-white"></div>
+                  <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
+                  <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
+                </div>
+              ) : (
+                <div className="flex space-x-2 min-w-max pb-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category.id}
+                      className={`flex items-center px-4 py-2 rounded-lg transition ${
+                        activeCategory === category.name
+                          ? "bg-myBlack hover:bg-gray-700 text-white"
+                          : "bg-slate-100 hover:bg-slate-200 text-gray-700"
+                      }`}
+                      onClick={() => setActiveCategory(category.name)}
+                    >
+                      <span>{category.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Loading state */}
+            <div className="mt-4">
+              {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="h-full bg-white border shadow rounded-lg">
+                    <div className="p-4 border-t border-gray-100">
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                    <div className="p-4">
+                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Resources Grid View */}
+                  {viewMode === "grid" ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {sortedResources.map((resource) => (
+                        <Card
+                          key={resource.id}
+                          className="h-full hover:shadow-md transition cursor-pointer"
+                          onClick={() => window.open(resource.url, "_blank")}
+                        >
+                          <CardHeader className="pb-2">
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-center justify-end">
+                                <div className="text-[16px]">
+                                  {resource.title}
+                                </div>
+                              </div>
+                              <div className="flex mt-1 items-center">
+                                <ExternalLink className="size-3" />
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <CardDescription className=" text-[14px] line-clamp-2">
+                              {resource.description}
+                            </CardDescription>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    // Resources List View
+                    <Card>
+                      <CardContent className="p-6">
+                        <ul className="divide-y">
+                          {sortedResources.map((resource) => (
+                            <li
+                              key={resource.id}
+                              className="-ml-6 p-3 rounded flex items-center justify-between hover:bg-slate-50 transition cursor-pointer"
+                              onClick={() =>
+                                window.open(resource.url, "_blank")
+                              }
+                            >
+                              <div className="flex items-center space-x-4">
+                                <div>
+                                  <h3 className="font-medium text-myBlack flex items-center">
+                                    {resource.title}
+                                  </h3>
+                                  <p className="text-[14px] text-gray-500">
+                                    {resource.description}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center space-x-6">
+                                <ExternalLink className=" text-gray-400 size-4" />
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Empty state */}
+                  {sortedResources.length === 0 && !loading && (
+                    <div className="text-center py-12">
+                      <Link className="mx-auto size-12 text-gray-300 mb-4" />
+                      <h3 className="text-lg font-medium text-gray-700">
+                        No resources found
+                      </h3>
+                      <p className="text-gray-500">
+                        Try adjusting your search or category
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Categories */}
-      <div className="mb-8 overflow-x-auto">
-        {loading ? (
-          <div className="flex space-x-2 min-w-max pb-2 animate-pulse">
-            <div className="flex items-center px-5 py-4 border shadow rounded-lg bg-white"></div>
-            <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
-            <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
-          </div>
-        ) : (
-          <div className="flex space-x-2 min-w-max pb-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                className={`flex items-center px-4 py-2 rounded-lg transition ${
-                  activeCategory === category.name
-                    ? "bg-blue-500 text-white"
-                    : "bg-slate-100 hover:bg-slate-200 text-gray-700"
-                }`}
-                onClick={() => setActiveCategory(category.name)}
-              >
-                <span>{category.name}</span>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Loading state */}
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-
-          <div className="h-full bg-white border shadow rounded-lg">
-            <div className="p-4 border-t border-gray-100">
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-            <div className="p-4">
-              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-              <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <>
-          {/* Resources Grid View */}
-          {viewMode === "grid" ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {sortedResources.map((resource) => (
-                <Card
-                  key={resource.id}
-                  className="h-full hover:shadow-md transition cursor-pointer"
-                  onClick={() => window.open(resource.url, "_blank")}
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center justify-end">
-                        <CardTitle className="text-lg">
-                          {resource.title}
-                        </CardTitle>
-                      </div>
-                      <div className="flex mt-1 items-center">
-                        <ExternalLink className="size-3" />
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="line-clamp-2">
-                      {resource.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            // Resources List View
-            <Card>
-              <CardContent className="pt-6">
-                <ul className="divide-y">
-                  {sortedResources.map((resource) => (
-                    <li
-                      key={resource.id}
-                      className="py-3 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer"
-                      onClick={() => window.open(resource.url, "_blank")}
-                    >
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src={resource.icon}
-                          alt={resource.title}
-                          className="w-6 h-6 rounded"
-                        />
-                        <div>
-                          <h3 className="font-medium text-myBlack flex items-center">
-                            {resource.title}
-                            {resource.favorite && (
-                              <Star className="size-3 text-yellow-400 fill-yellow-400 ml-2" />
-                            )}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {resource.description}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-6">
-                        <ExternalLink className="size-4 text-gray-400" />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Empty state */}
-          {sortedResources.length === 0 && !loading && (
-            <div className="text-center py-12">
-              <Link className="mx-auto size-12 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-700">
-                No resources found
-              </h3>
-              <p className="text-gray-500">
-                Try adjusting your search or category
-              </p>
-            </div>
-          )}
-        </>
-      )}
     </div>
   )
 }
