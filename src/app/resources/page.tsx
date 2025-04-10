@@ -378,7 +378,6 @@ const ResourcesPage = () => {
             </div>
           </div>
 
-          
           <div className="h-full bg-white border shadow rounded-lg">
             <div className="p-4 border-t border-gray-100">
               <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
@@ -389,8 +388,6 @@ const ResourcesPage = () => {
             </div>
           </div>
         </div>
-
-        
       ) : (
         <>
           {/* Resources Grid View */}
@@ -475,25 +472,6 @@ const ResourcesPage = () => {
           )}
         </>
       )}
-
-      {/* Add new resource button */}
-      <div className="fixed bottom-8 right-8">
-        <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 5v14M5 12h14" />
-          </svg>
-        </button>
-      </div>
     </div>
   )
 }
