@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
-
+import React, { useEffect, useState } from "react"
+import * as Icons from "lucide-react"
 import {
   Card,
   CardContent,
@@ -23,35 +23,62 @@ import {
   Clock,
   ExternalLink,
   Star,
-  Link
+  Link,
 } from "lucide-react"
+import { db } from "../firebase/config"
+import { collection, getDocs } from "firebase/firestore"
+
+interface ResourcesCategory {
+  id?: string
+  name?: string
+  icon?: string
+}
 
 const ResourcesPage = () => {
   const [searchTerm, setSearchTerm] = useState("")
+  const [resourcesCategory, setResourcesCategory] = useState<
+    ResourcesCategory[]
+  >([])
   const [activeCategory, setActiveCategory] = useState("All")
   const [viewMode, setViewMode] = useState("grid") // grid or list
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchedResourcesCategories = async () => {
+      try {
+        if (!db) {
+          console.error("Firebase not initialized")
+          return
+        }
+        const projectsCollection = collection(db, "Resource Category")
+        const projectSnapshot = await getDocs(projectsCollection)
+        const fetchedResourcesCategory = projectSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+
+        setResourcesCategory(fetchedResourcesCategory)
+      } catch (error) {
+        console.error("Error fetching projects:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchedResourcesCategories()
+  }, [])
 
   // Dummy resource categories
   const categories = [
     { id: "all", name: "All", icon: <Folder className="size-4" /> },
-    {
-      id: "development",
-      name: "Development",
-      icon: <Code className="size-4" />,
-    },
-    { id: "design", name: "Design", icon: <Monitor className="size-4" /> },
-    {
-      id: "documentation",
-      name: "Documentation",
-      icon: <BookOpen className="size-4" />,
-    },
-    { id: "tools", name: "Tools", icon: <Code className="size-4" /> },
-    {
-      id: "productivity",
-      name: "Productivity",
-      icon: <Coffee className="size-4" />,
-    },
-    { id: "work", name: "Work", icon: <Briefcase className="size-4" /> },
+    ...resourcesCategory.map((category) => {
+      const Icon = Icons[category.icon as keyof typeof Icons] || Folder
+      return {
+        id: category.id ?? "",
+        name: category.name ?? "",
+        icon: <Icon className="size-4" />,
+      }
+    }),
   ]
 
   // Dummy resources data
@@ -292,7 +319,6 @@ const ResourcesPage = () => {
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    
                     <CardTitle className="text-lg">{resource.title}</CardTitle>
                   </div>
                   {resource.favorite && (
