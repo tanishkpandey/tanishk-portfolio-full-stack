@@ -255,7 +255,9 @@ const ResourcesPage = () => {
       <div className="mb-8">
         <Card>
           <CardHeader>
-            <h1 className="text-3xl text-myBlack font-bold mb-3">Resources</h1>
+            <h1 className="text-3xl text-foreground font-bold mb-3">
+              Resources
+            </h1>
 
             <CardContent>
               <p className="text-muted-foreground text-[14px] -ml-5">
@@ -321,7 +323,7 @@ const ResourcesPage = () => {
                       key={category.id}
                       className={`flex items-center px-4 py-2 rounded-lg transition ${
                         activeCategory === category.name
-                          ? "bg-myBlack hover:bg-gray-700 text-white"
+                          ? "bg-foreground hover:bg-gray-700 text-white"
                           : "bg-slate-100 hover:bg-slate-200 text-gray-700"
                       }`}
                       onClick={() => setActiveCategory(category.name)}
@@ -443,7 +445,7 @@ const ResourcesPage = () => {
                             >
                               <div className="flex items-center space-x-4">
                                 <div>
-                                  <h3 className="font-medium text-myBlack flex items-center">
+                                  <h3 className="font-medium text-foreground flex items-center">
                                     {resource.title}
                                   </h3>
                                   <p className="text-[14px] text-gray-500">

@@ -1,56 +1,60 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect, useRef } from "react";
-import { sendMessageToDialogflow } from "../services/dialogflowService";
-import { PaperAirplaneIcon, ChatBubbleLeftEllipsisIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import React, { useState, useEffect, useRef } from "react"
+import { sendMessageToDialogflow } from "../services/dialogflowService"
+import {
+  PaperAirplaneIcon,
+  ChatBubbleLeftEllipsisIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid"
 
 interface Message {
-  text: string;
-  sender: "bot" | "user";
+  text: string
+  sender: "bot" | "user"
 }
 
 const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     { text: "Hey there! 👋 Ask me anything about my skills.", sender: "bot" },
-  ]);
-  const [userInput, setUserInput] = useState<string>("");
-  const [isOpen, setIsOpen] = useState<boolean>(false); // Chatbot default closed
-  const [isTyping, setIsTyping] = useState<boolean>(false); // Typing animation
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  ])
+  const [userInput, setUserInput] = useState<string>("")
+  const [isOpen, setIsOpen] = useState<boolean>(false) // Chatbot default closed
+  const [isTyping, setIsTyping] = useState<boolean>(false) // Typing animation
+  const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     // Auto-scroll to the bottom of messages
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   const handleSendMessage = async () => {
-    if (!userInput.trim()) return;
+    if (!userInput.trim()) return
 
     const newMessages: Message[] = [
       ...messages,
       { text: userInput, sender: "user" as const },
-    ];
-    setMessages(newMessages);
-    setUserInput("");
-    setIsTyping(true); // Show typing animation
+    ]
+    setMessages(newMessages)
+    setUserInput("")
+    setIsTyping(true) // Show typing animation
 
-    const botResponse = await sendMessageToDialogflow(userInput);
-    
+    const botResponse = await sendMessageToDialogflow(userInput)
+
     setTimeout(() => {
       setMessages([
         ...newMessages,
         { text: botResponse, sender: "bot" as const },
-      ]);
-      setIsTyping(false); // Remove typing animation
-    }, 1200); // Simulate delay for a more natural experience
-  };
+      ])
+      setIsTyping(false) // Remove typing animation
+    }, 1200) // Simulate delay for a more natural experience
+  }
 
   // Handle Enter key press to send message
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSendMessage();
+      handleSendMessage()
     }
-  };
+  }
 
   return (
     <div className="fixed bottom-8 right-8 flex flex-col items-end">
@@ -59,7 +63,7 @@ const Chatbot: React.FC = () => {
         <button
           className="bg-[#1f2937] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
           onClick={() => setIsOpen(true)}
-          style={{ marginBottom: "-360px" }} 
+          style={{ marginBottom: "-360px" }}
         >
           <ChatBubbleLeftEllipsisIcon className="w-7 h-7" />
         </button>
@@ -68,13 +72,18 @@ const Chatbot: React.FC = () => {
       {/* Chatbot UI (Hidden when closed) */}
       <div
         className={`w-80 bg-white shadow-lg border border-gray-300 rounded-lg flex flex-col transition-all duration-300 ${
-          isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
+          isOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-5 pointer-events-none"
         }`}
       >
         {/* Chat Header with Close Button */}
         <div className="bg-[#1f2937] text-white text-lg font-semibold p-3 rounded-t-lg flex justify-between items-center">
-          Chat with Me 
-          <button onClick={() => setIsOpen(false)} className="hover:text-gray-300">
+          Chat with Me
+          <button
+            onClick={() => setIsOpen(false)}
+            className="hover:text-gray-300"
+          >
             <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
@@ -86,7 +95,7 @@ const Chatbot: React.FC = () => {
               key={index}
               className={`text-sm p-2 rounded-lg max-w-[80%] ${
                 msg.sender === "bot"
-                  ? "bg-gray-200 text-gray-900 self-start"
+                  ? "bg-muted text-gray-900 self-start"
                   : "bg-[#1f2937] text-white self-end"
               }`}
             >
@@ -96,7 +105,7 @@ const Chatbot: React.FC = () => {
 
           {/* Typing Animation */}
           {isTyping && (
-            <div className="text-sm p-2 bg-gray-200 text-gray-900 self-start rounded-lg max-w-[80%] flex items-center">
+            <div className="text-sm p-2 bg-muted text-gray-900 self-start rounded-lg max-w-[80%] flex items-center">
               <span className="animate-bounce">.</span>
               <span className="animate-bounce delay-100">.</span>
               <span className="animate-bounce delay-200">.</span>
@@ -126,7 +135,7 @@ const Chatbot: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Chatbot;
+export default Chatbot

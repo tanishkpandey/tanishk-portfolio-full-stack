@@ -72,7 +72,7 @@ const Blog = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl text-myBlack font-bold mb-8">Blog</h1>
+      <h1 className="text-3xl text-foreground font-bold mb-8">Blog</h1>
 
       <Card className="h-full hover:shadow-md transition cursor-pointer">
         <CardHeader className="pb-2">
@@ -87,7 +87,9 @@ const Blog = () => {
 
       {/* Featured post */}
       <div className="mb-12">
-        <h2 className="text-xl text-myBlack font-bold mb-4">Featured Post</h2>
+        <h2 className="text-xl text-foreground font-bold mb-4">
+          Featured Post
+        </h2>
         <Card className="overflow-hidden">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/3">
@@ -140,7 +142,7 @@ const Blog = () => {
 
       {/* Recent posts - Horizontal Layout */}
       <div>
-        <h2 className="text-xl text-myBlack font-bold mb-4">Recent Posts</h2>
+        <h2 className="text-xl text-foreground font-bold mb-4">Recent Posts</h2>
         <div className="space-y-6">
           {blogPosts.slice(1).map((post) => (
             <Card key={post.id} className="overflow-hidden">
@@ -202,7 +204,7 @@ const Blog = () => {
 
       {/* Category filters */}
       <div className="mt-12">
-        <h2 className="text-xl text-myBlack font-bold mb-4">Categories</h2>
+        <h2 className="text-xl text-foreground font-bold mb-4">Categories</h2>
         <Card>
           <CardContent className="pt-6">
             <div className="flex flex-wrap gap-3">

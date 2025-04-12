@@ -192,7 +192,7 @@ const CodeSnippetsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl text-myBlack font-bold mb-8">Code Snippets</h1>
+      <h1 className="text-3xl text-foreground font-bold mb-8">Code Snippets</h1>
 
       {/* Search and filters */}
       <div className="mb-8">
