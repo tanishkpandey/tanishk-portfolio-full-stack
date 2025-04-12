@@ -5,7 +5,16 @@ import { Footer } from './Footer';
 
 export function FooterWrapper() {
   const pathname = usePathname();
-  const showFooter = pathname === '/' || pathname === '/blogs' || pathname === '/snippets' || pathname === '/resources';
+  
+  // Only show footer on specific routes
+  const showFooter = pathname && (
+    pathname === '/' || 
+    pathname === '/blogs' || 
+    pathname === '/snippets' || 
+    pathname === '/resources'
+  );
 
-  return showFooter ? <Footer /> : null;
+  if (!showFooter) return null;
+  
+  return <Footer />;
 }

@@ -250,7 +250,7 @@ const ResourcesPage = () => {
   })
 
   return (
-    <div className="container mx-auto py-12">
+    <div className="container mx-auto py-8">
       {/* Search and view options */}
       <div className="mb-8">
         <Card>

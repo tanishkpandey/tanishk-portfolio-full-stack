@@ -395,8 +395,6 @@ const AdminPanelContent = () => {
           </CardContent>
         </Card>
 
-
-
         {/* About Section */}
         <Card className="mt-6 p-6 bg-white border rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">About</h2>
@@ -416,7 +414,6 @@ const AdminPanelContent = () => {
             </button>
           </CardContent>
         </Card>
-
 
         {/* Projects Section */}
         <Card className="mt-6 bg-white border rounded-lg shadow-md">
@@ -511,7 +508,6 @@ const AdminPanelContent = () => {
           </CardContent>
         </Card>
 
-
         {/* Skills Section */}
         <Card className="mt-6 bg-white border rounded-lg shadow-md">
           <CardHeader>
@@ -576,7 +572,6 @@ const AdminPanelContent = () => {
 
           </CardContent>
         </Card>
-
 
         {/* Experience Section */}
         <Card className="mt-6 bg-white border rounded-lg shadow-md">
