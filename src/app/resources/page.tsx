@@ -252,9 +252,9 @@ const ResourcesPage = () => {
 
             <CardContent>
               <p className="text-muted-foreground text-[14px] -ml-5">
-                Here's a collection of my go-to resources that I use in my
+                Here&apos;s a collection of my go-to resources that I use in my
                 projects. <br /> Feel free to explore and grab anything you find
-                useful — they’re all handpicked with 💖!
+                useful — they&apos;re all handpicked with 💖!
               </p>
             </CardContent>
           </CardHeader>
