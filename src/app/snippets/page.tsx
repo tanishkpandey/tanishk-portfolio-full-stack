@@ -175,7 +175,7 @@ const CodeSnippetsPage = () => {
     return matchesSearch && matchesCategory && matchesLanguage
   })
 
-  const getCategoryIcon = (category) => {
+  const getCategoryIcon = (category: string) => {
     switch (category) {
       case "Frontend":
         return <Laptop className="size-4" />
