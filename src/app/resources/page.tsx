@@ -5,23 +5,14 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import {
-  Code,
   Folder,
-  Monitor,
-  BookOpen,
-  Coffee,
-  Briefcase,
   Search,
   Grid,
   List,
-  Clock,
   ExternalLink,
-  Star,
   Link,
 } from "lucide-react"
 import { db } from "../firebase/config"
@@ -289,7 +280,7 @@ const ResourcesPage = () => {
               <div className="flex items-center space-x-4">
                 <button
                   className={`p-2 rounded-md transition ${
-                    viewMode === "grid" ? "bg-slate-200" : "hover:bg-slate-100"
+                    viewMode === "grid" ? "bg-muted" : "hover:bg-muted"
                   }`}
                   onClick={() => setViewMode("grid")}
                   title="Grid view"
@@ -298,7 +289,7 @@ const ResourcesPage = () => {
                 </button>
                 <button
                   className={`p-2 rounded-md transition ${
-                    viewMode === "list" ? "bg-slate-200" : "hover:bg-slate-100"
+                    viewMode === "list" ? "bg-muted" : "hover:bg-muted"
                   }`}
                   onClick={() => setViewMode("list")}
                   title="List view"
@@ -312,20 +303,21 @@ const ResourcesPage = () => {
             <div className=" mt-8 text-[14px] overflow-x-auto">
               {loading ? (
                 <div className="flex space-x-2 min-w-max pb-2 animate-pulse">
-                  <div className="flex items-center px-5 py-4 border shadow rounded-lg bg-white"></div>
-                  <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
-                  <div className="flex items-center px-14 py-4 border shadow rounded-lg bg-white"></div>
+                  <div className="flex items-center px-5 py-4 border shadow rounded-lg  bg-muted"></div>
+                  <div className="flex items-center px-14 py-4 border shadow rounded-lg  bg-muted"></div>
+                  <div className="flex items-center px-14 py-4 border shadow rounded-lg  bg-muted"></div>
                 </div>
               ) : (
                 <div className="flex space-x-2 min-w-max pb-2">
                   {categories.map((category) => (
                     <button
                       key={category.id}
-                      className={`flex items-center px-4 py-2 rounded-lg transition ${
+                      className={`flex text-red-600 items-center px-4 py-2 transition ${
                         activeCategory === category.name
-                          ? "bg-foreground hover:bg-gray-700 text-white"
-                          : "bg-slate-100 hover:bg-slate-200 text-gray-700"
+                          ? "border-b-2 border-myBlack text-white"
+                          : "hover:bg-muted text-gray-700"
                       }`}
+
                       onClick={() => setActiveCategory(category.name)}
                     >
                       <span>{category.name}</span>
@@ -339,63 +331,63 @@ const ResourcesPage = () => {
             <div className="mt-4">
               {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
 
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
 
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
 
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
 
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
 
-                  <div className="h-full bg-white border shadow rounded-lg">
-                    <div className="p-4 border-t border-gray-100">
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                  <div className="h-full  bg-muted border shadow rounded-lg">
+                    <div className="p-4   border-gray-100">
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                     <div className="p-4">
-                      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-muted rounded w-1/2 mb-2"></div>
                     </div>
                   </div>
                 </div>
@@ -466,7 +458,7 @@ const ResourcesPage = () => {
                   {/* Empty state */}
                   {sortedResources.length === 0 && !loading && (
                     <div className="text-center py-12">
-                      <Link className="mx-auto size-12 text-gray-300 mb-4" />
+                      <Link className="mx-auto size-12 text-gray-600 mb-4" />
                       <h3 className="text-lg font-medium text-gray-700">
                         No resources found
                       </h3>
