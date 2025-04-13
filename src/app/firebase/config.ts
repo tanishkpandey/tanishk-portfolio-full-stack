@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
-import { getFirestore, Firestore } from "firebase/firestore"
+import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,10 +16,7 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 const auth = getAuth(app)
 
-// Initialize Firestore with explicit typing
-let db: Firestore | null = null
-if (typeof window !== "undefined") {
-  db = getFirestore(app)
-}
+// Initialize Firestore - always create the instance but handle server vs client differently
+const db = typeof window !== "undefined" ? getFirestore(app) : null
 
 export { db, app, auth }

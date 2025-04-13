@@ -22,6 +22,12 @@ export const Experience = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
+
+        if (!db) {
+          console.error("Firestore is not available on the server side")
+          return []
+        }
+        
         const experienceCollection = collection(db, "Experience")
         const experienceSnapshot = await getDocs(experienceCollection)
 
