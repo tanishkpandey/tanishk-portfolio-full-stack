@@ -18,6 +18,19 @@ import { RiAddCircleLine } from "react-icons/ri"
 import { RiDeleteBin3Line } from "react-icons/ri"
 import { MdOutlineCancel } from "react-icons/md"
 import { GoListUnordered } from "react-icons/go"
+import { useToast } from "@/components/ui/use-toast"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Loading } from "@/components/ui/loading"
 
 interface Profile {
   name?: string
@@ -48,6 +61,8 @@ interface Experience {
 }
 
 const AdminPanelContent = () => {
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(true)
   const [profile, setProfile] = useState<Profile>({})
   const [about, setAbout] = useState<string>("")
   const [experience, setExperience] = useState<Experience[]>([])
@@ -77,6 +92,7 @@ const AdminPanelContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true)
         // Fetch Profile
         if (!db) {
           console.error("Firestore is not initialized.")
@@ -113,11 +129,18 @@ const AdminPanelContent = () => {
         setExperience(experienceData)
       } catch (error) {
         console.error("Error fetching data:", error)
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to fetch data. Please try again.",
+        })
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchData()
-  }, [])
+  }, [toast])
 
   // Profile Save Handler
   const handleSaveProfile = async () => {
@@ -127,9 +150,18 @@ const AdminPanelContent = () => {
         return
       }
       await setDoc(doc(db, "Profile", "PArB5TcvuHEVztorw4LB"), profile)
-      alert("Profile updated successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Profile updated successfully!",
+      })
     } catch (error) {
       console.error("Error updating profile:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
+      })
     }
   }
 
@@ -143,9 +175,18 @@ const AdminPanelContent = () => {
       await setDoc(doc(db, "About", "zj68ikIqsTCVdIBhIHuG"), {
         content: about,
       })
-      alert("About updated successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "About updated successfully!",
+      })
     } catch (error) {
       console.error("Error updating About:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update About. Please try again.",
+      })
     }
   }
 
@@ -169,9 +210,18 @@ const AdminPanelContent = () => {
         setProjects([...projects, { id: docRef.id, ...newProject }])
       }
       setNewProject({ title: "", description: "", stack: "", liveLink: "" })
-      alert("Project saved successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Project saved successfully!",
+      })
     } catch (error) {
       console.error("Error saving project:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to save project. Please try again.",
+      })
     }
   }
 
@@ -193,15 +243,28 @@ const AdminPanelContent = () => {
 
       await deleteDoc(doc(db, "Projects", id))
       setProjects(projects.filter((proj) => proj.id !== id))
-      alert("Project deleted successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Project deleted successfully!",
+      })
     } catch (error) {
       console.error("Error deleting project:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete project. Please try again.",
+      })
     }
   }
 
   const handleSaveSkill = async () => {
     if (newSkill.trim() === "") {
-      alert("Skill cannot be empty.")
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Skill cannot be empty.",
+      })
       return
     }
 
@@ -228,9 +291,18 @@ const AdminPanelContent = () => {
       setSkills(updatedSkills) // Update local state
       setNewSkill("") // Clear input field
       setEditingSkillIndex(null) // Reset editing index
-      alert("Skills updated successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Skills updated successfully!",
+      })
     } catch (error) {
       console.error("Error saving skills:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update skills. Please try again.",
+      })
     }
   }
 
@@ -257,9 +329,18 @@ const AdminPanelContent = () => {
         Skills: updatedSkills,
       })
       setSkills(updatedSkills) // Update local state
-      alert("Skill deleted successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Skill deleted successfully!",
+      })
     } catch (error) {
       console.error("Error deleting skill:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete skill. Please try again.",
+      })
     }
   }
 
@@ -294,9 +375,18 @@ const AdminPanelContent = () => {
         duration: "",
         description: [""],
       })
-      alert("Experience saved successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Experience saved successfully!",
+      })
     } catch (error) {
       console.error("Error saving experience:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to save experience. Please try again.",
+      })
     }
   }
 
@@ -314,10 +404,23 @@ const AdminPanelContent = () => {
       }
       await deleteDoc(doc(db, "Experience", id))
       setExperience(experience.filter((exp) => exp.id !== id))
-      alert("Experience deleted successfully!")
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Experience deleted successfully!",
+      })
     } catch (error) {
       console.error("Error deleting experience:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete experience. Please try again.",
+      })
     }
+  }
+
+  if (isLoading) {
+    return <Loading text="Loading admin panel..." />
   }
 
   return (
@@ -454,12 +557,31 @@ const AdminPanelContent = () => {
                   >
                     <BiSolidEdit />
                   </button>
-                  <button
-                    onClick={() => handleDeleteProject(proj.id)}
-                    className=" hover:text-red-500 transition text-xl text-foreground p-2 rounded-full"
-                  >
-                    <RiDeleteBin3Line />
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <button className=" hover:text-red-500 transition text-xl text-foreground p-2 rounded-full">
+                        <RiDeleteBin3Line />
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete the project.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteProject(proj.id)}
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             ))}
