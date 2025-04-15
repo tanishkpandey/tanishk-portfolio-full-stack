@@ -241,7 +241,7 @@ const ResourcesPage = () => {
   })
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container max-w-screen-lg mx-auto py-8">
       {/* Search and view options */}
       <div className="mb-8">
         <Card>

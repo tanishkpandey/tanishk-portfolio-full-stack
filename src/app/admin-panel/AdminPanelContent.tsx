@@ -11,7 +11,6 @@ import {
   setDoc,
 } from "firebase/firestore"
 import { db } from "@/app/firebase/config"
-import AdminNavbar from "@/components/AdminNavbar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { BiSolidEdit } from "react-icons/bi"
 import { RiAddCircleLine } from "react-icons/ri"
@@ -424,10 +423,9 @@ const AdminPanelContent = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50  min-h-screen">
-      <AdminNavbar />
-
+    <div className=" min-h-screen">
       <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        
         {/* Profile Section */}
         <Card className="p-6 bg-white border rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Profile</h2>

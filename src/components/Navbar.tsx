@@ -20,7 +20,7 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow cursor-pointer transition sticky top-1 z-10">
+    <nav className="container max-w-screen-lg mx-auto rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow cursor-pointer transition sticky top-1 z-10">
       <div className="container max-w-screen-lg mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo/Name */}

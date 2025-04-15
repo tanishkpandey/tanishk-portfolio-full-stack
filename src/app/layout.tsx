@@ -26,7 +26,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="container mx-auto max-w-screen-lg px-4">
+          <main className=" mx-auto px-4">
             <NavbarWrapper />
             <Toaster position="top-center" reverseOrder={false} />
             {children}
