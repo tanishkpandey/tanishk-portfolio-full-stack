@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Loading } from "@/components/ui/loading"
 
 interface Resource {
   id?: string
@@ -159,6 +160,10 @@ export default function ResourcesPageContent() {
     })
     setEditingResource(null)
     setIsEditing(false)
+  }
+
+  if (isLoading) {
+    return <Loading text="Loading Resources..." />
   }
 
   return (

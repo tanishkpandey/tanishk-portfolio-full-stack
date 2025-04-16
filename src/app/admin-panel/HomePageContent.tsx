@@ -108,6 +108,7 @@ export default function HomePageContent() {
 
   return (
     <div className="space-y-6">
+      
       {/* Profile Card */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { signOut } from "firebase/auth"
 import { auth } from "@/app/firebase/config"
+import { ThemeToggle } from "../theme-toggle"
 
 const sidebarItems = [
   {
@@ -121,15 +122,18 @@ export default function AdminLayout({
                 "Admin Panel"}
             </h1>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-          >
-            <LogOut className="h-4 w-4" />
-            <span className="hidden md:inline">Logout</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden md:inline">Logout</span>
+            </Button>
+          </div>
         </div>
         <main className="p-4 md:p-6">{children}</main>
       </div>

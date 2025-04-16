@@ -30,6 +30,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Loading } from "@/components/ui/loading"
+import { Input } from "@/components/ui/input"
 
 interface Profile {
   name?: string
@@ -423,83 +424,85 @@ const AdminPanelContent = () => {
   }
 
   return (
-    <div className=" min-h-screen">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {/* Profile Section */}
-        <Card className="p-6 bg-white border rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Profile</h2>
+        <Card className="p-6">
+          <h2 className="text-2xl font-bold text-card-foreground mb-4">
+            Profile
+          </h2>
           <CardContent>
-            <input
+            <Input
               type="text"
               placeholder="Name"
               value={profile.name || ""}
               onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="Role"
               value={profile.role || ""}
               onChange={(e) => setProfile({ ...profile, role: e.target.value })}
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="Description"
               value={profile.description || ""}
               onChange={(e) =>
                 setProfile({ ...profile, description: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="Github"
               value={profile.github || ""}
               onChange={(e) =>
                 setProfile({ ...profile, github: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="LinkedIn"
               value={profile.linkedin || ""}
               onChange={(e) =>
                 setProfile({ ...profile, linkedin: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="email"
               placeholder="Contact Email"
               value={profile.email || ""}
               onChange={(e) =>
                 setProfile({ ...profile, email: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="Resume Link"
               value={profile.resume || ""}
               onChange={(e) =>
                 setProfile({ ...profile, resume: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
-            <input
+            <Input
               type="text"
               placeholder="Profile Picture Link"
               value={profile.userImage || ""}
               onChange={(e) =>
                 setProfile({ ...profile, userImage: e.target.value })
               }
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-3 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-3"
             />
             <button
               onClick={handleSaveProfile}
-              className="mt-5 bg-foreground hover:bg-gray-700 text-white p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-5 bg-primary hover:bg-primary/90 text-primary-foreground p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-ring focus:outline-none"
             >
               Save Profile
             </button>
@@ -507,19 +510,21 @@ const AdminPanelContent = () => {
         </Card>
 
         {/* About Section */}
-        <Card className="mt-6 p-6 bg-white border rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">About</h2>
+        <Card className="p-6">
+          <h2 className="text-2xl font-bold text-card-foreground mb-4">
+            About
+          </h2>
           <CardContent>
             <textarea
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="p-3 bg-gray-100 border rounded-lg w-full mt-2 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+              className="p-3 bg-muted border border-input rounded-lg w-full mt-2 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none resize-none"
               placeholder="Write something about yourself..."
-              rows={5} // Adjust rows as needed
+              rows={5}
             />
             <button
               onClick={handleSaveAbout}
-              className="mt-4 bg-foreground hover:bg-gray-700 text-white p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="mt-4 bg-primary hover:bg-primary/90 text-primary-foreground p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-ring focus:outline-none"
             >
               Save About
             </button>
@@ -527,15 +532,17 @@ const AdminPanelContent = () => {
         </Card>
 
         {/* Projects Section */}
-        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+        <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-800">Projects</h2>
+              <h2 className="text-2xl font-bold text-card-foreground">
+                Projects
+              </h2>
               <div onClick={() => setAddProjectVisible((prev) => !prev)}>
                 {addProjectVisible === false ? (
-                  <RiAddCircleLine className="size-5" />
+                  <RiAddCircleLine className="size-5 text-card-foreground" />
                 ) : (
-                  <MdOutlineCancel className="size-5" />
+                  <MdOutlineCancel className="size-5 text-card-foreground" />
                 )}
               </div>
             </div>
@@ -546,17 +553,17 @@ const AdminPanelContent = () => {
                 key={proj.id}
                 className="flex justify-between items-center mb-4"
               >
-                <p className="text-gray-700 font-medium">{proj.title}</p>
+                <p className="text-card-foreground font-medium">{proj.title}</p>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEditProject(proj)}
-                    className=" hover:text-gray-600 text-xl text-foreground p-2 rounded-full"
+                    className="hover:text-muted-foreground text-xl text-card-foreground p-2 rounded-full"
                   >
                     <BiSolidEdit />
                   </button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <button className=" hover:text-red-500 transition text-xl text-foreground p-2 rounded-full">
+                      <button className="hover:text-destructive transition text-xl text-card-foreground p-2 rounded-full">
                         <RiDeleteBin3Line />
                       </button>
                     </AlertDialogTrigger>
@@ -584,17 +591,17 @@ const AdminPanelContent = () => {
             ))}
             {addProjectVisible && (
               <div className="mt-4">
-                <h3 className="text-xl mb-2 font-semibold text-gray-800">
+                <h3 className="text-xl mb-2 font-semibold text-card-foreground">
                   {newProject.id ? "Edit Project" : "Add Project"}
                 </h3>
-                <input
+                <Input
                   type="text"
                   placeholder="Title"
                   value={newProject.title}
                   onChange={(e) =>
                     setNewProject({ ...newProject, title: e.target.value })
                   }
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="mb-2"
                 />
                 <textarea
                   placeholder="Description"
@@ -605,29 +612,29 @@ const AdminPanelContent = () => {
                       description: e.target.value,
                     })
                   }
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="w-full p-3 bg-muted border border-input rounded-lg mb-2 text-foreground placeholder:text-muted-foreground"
                 />
-                <input
+                <Input
                   type="text"
                   placeholder="Tech Stack"
                   value={newProject.stack}
                   onChange={(e) =>
                     setNewProject({ ...newProject, stack: e.target.value })
                   }
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="mb-2"
                 />
-                <input
+                <Input
                   type="text"
                   placeholder="Live Link"
                   value={newProject.liveLink}
                   onChange={(e) =>
                     setNewProject({ ...newProject, liveLink: e.target.value })
                   }
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="mb-2"
                 />
                 <button
                   onClick={handleSaveProject}
-                  className="p-3 bg-foreground hover:bg-gray-700 text-white rounded-lg w-full"
+                  className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg w-full"
                 >
                   {newProject.id ? "Update Project" : "Add Project"}
                 </button>
@@ -641,7 +648,7 @@ const AdminPanelContent = () => {
                         liveLink: "",
                       })
                     }
-                    className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                    className="p-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg w-full mt-2"
                   >
                     Cancel
                   </button>
@@ -652,37 +659,39 @@ const AdminPanelContent = () => {
         </Card>
 
         {/* Skills Section */}
-        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+        <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-800">Skills</h2>
+              <h2 className="text-2xl font-bold text-card-foreground">
+                Skills
+              </h2>
               <div onClick={() => setAddSkillsVisible((prev) => !prev)}>
                 {addSkillsVisible === false ? (
-                  <RiAddCircleLine className="size-5" />
+                  <RiAddCircleLine className="size-5 text-card-foreground" />
                 ) : (
-                  <MdOutlineCancel className="size-5" />
+                  <MdOutlineCancel className="size-5 text-card-foreground" />
                 )}
               </div>
-            </div>{" "}
+            </div>
           </CardHeader>
           <CardContent>
             <ul className="list-disc pl-6">
               {skills.map((skill, index) => (
                 <li
                   key={index}
-                  className="flex justify-between items-center mb-2 text-gray-700"
+                  className="flex justify-between items-center mb-2 text-card-foreground"
                 >
                   <span>{skill}</span>
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEditSkill(index)}
-                      className=" hover:text-gray-600 transition text-xl text-foreground p-2 rounded-full"
+                      className="hover:text-muted-foreground transition text-xl text-card-foreground p-2 rounded-full"
                     >
                       <BiSolidEdit />
                     </button>
                     <button
                       onClick={() => handleDeleteSkill(index)}
-                      className=" hover:text-red-500 transition text-xl text-foreground p-2 rounded-full"
+                      className="hover:text-destructive transition text-xl text-card-foreground p-2 rounded-full"
                     >
                       <RiDeleteBin3Line />
                     </button>
@@ -692,23 +701,23 @@ const AdminPanelContent = () => {
             </ul>
             {addSkillsVisible && (
               <div className="mt-4">
-                <input
+                <Input
                   type="text"
                   placeholder="Enter a skill"
                   value={newSkill}
                   onChange={(e) => setNewSkill(e.target.value)}
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="mb-2"
                 />
                 <button
                   onClick={handleSaveSkill}
-                  className="p-3 bg-foreground hover:bg-gray-700 text-white rounded-lg w-full"
+                  className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg w-full"
                 >
                   {editingSkillIndex !== null ? "Update Skill" : "Add Skill"}
                 </button>
                 {editingSkillIndex !== null && (
                   <button
                     onClick={handleCancelEdit}
-                    className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                    className="p-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg w-full mt-2"
                   >
                     Cancel
                   </button>
@@ -719,15 +728,17 @@ const AdminPanelContent = () => {
         </Card>
 
         {/* Experience Section */}
-        <Card className="mt-6 bg-white border rounded-lg shadow-md">
+        <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-800">Experience</h2>
+              <h2 className="text-2xl font-bold text-card-foreground">
+                Experience
+              </h2>
               <div onClick={() => setAddExpVisible((prev) => !prev)}>
                 {addExpVisible === false ? (
-                  <RiAddCircleLine className="size-5" />
+                  <RiAddCircleLine className="size-5 text-card-foreground" />
                 ) : (
-                  <MdOutlineCancel className="size-5" />
+                  <MdOutlineCancel className="size-5 text-card-foreground" />
                 )}
               </div>
             </div>
@@ -736,7 +747,7 @@ const AdminPanelContent = () => {
             {experience.map((exp) => (
               <div
                 key={exp.id}
-                className="flex justify-between items-center mb-4 text-gray-700"
+                className="flex justify-between items-center mb-4 text-card-foreground"
               >
                 <p>
                   {exp.role} at {exp.company}
@@ -744,13 +755,13 @@ const AdminPanelContent = () => {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEditExperience(exp)}
-                    className=" hover:text-gray-600 transition text-xl text-foreground p-2 rounded-full"
+                    className="hover:text-muted-foreground transition text-xl text-card-foreground p-2 rounded-full"
                   >
                     <BiSolidEdit />
                   </button>
                   <button
                     onClick={() => handleDeleteExperience(exp.id)}
-                    className=" hover:text-red-500 transition text-xl text-foreground p-2 rounded-full"
+                    className="hover:text-destructive transition text-xl text-card-foreground p-2 rounded-full"
                   >
                     <RiDeleteBin3Line />
                   </button>
@@ -760,10 +771,10 @@ const AdminPanelContent = () => {
 
             {addExpVisible && (
               <div className="mt-4">
-                <h3 className="text-xl font-semibold text-gray-800">
+                <h3 className="text-xl font-semibold text-card-foreground">
                   {newExperience.id ? "Edit Experience" : "Add Experience"}
                 </h3>
-                <input
+                <Input
                   type="text"
                   placeholder="Company"
                   value={newExperience.company}
@@ -773,14 +784,16 @@ const AdminPanelContent = () => {
                       company: e.target.value,
                     })
                   }
-                  className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                  className="mb-2"
                 />
 
                 <div>
-                  <h4 className="font-semibold mb-1">Description</h4>
+                  <h4 className="font-semibold mb-1 text-card-foreground">
+                    Description
+                  </h4>
                   {newExperience?.description?.map((line, index) => (
                     <div key={index} className="flex items-center mb-2">
-                      <input
+                      <Input
                         type="text"
                         value={line}
                         onChange={(e) => {
@@ -793,7 +806,7 @@ const AdminPanelContent = () => {
                             description: updatedDescription,
                           })
                         }}
-                        className="w-full p-3 bg-gray-100 border rounded-lg"
+                        className="w-full"
                       />
                       <button
                         onClick={() => {
@@ -806,7 +819,7 @@ const AdminPanelContent = () => {
                             description: updatedDescription,
                           })
                         }}
-                        className="hover:text-red-500 ml-2 transition text-xl text-foreground p-2 rounded-full"
+                        className="hover:text-destructive ml-2 transition text-xl text-card-foreground p-2 rounded-full"
                       >
                         <RiDeleteBin3Line />
                       </button>
@@ -823,7 +836,7 @@ const AdminPanelContent = () => {
                           ],
                         })
                       }
-                      className="p-3 flex justify-center gap-2 items-center bg-foreground hover:bg-gray-700 text-white rounded-lg w-full"
+                      className="p-3 flex justify-center gap-2 items-center bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg w-full"
                     >
                       <GoListUnordered className="size-5" />
                       Add Point
@@ -832,7 +845,7 @@ const AdminPanelContent = () => {
                 </div>
 
                 <div>
-                  <input
+                  <Input
                     type="text"
                     placeholder="Duration"
                     value={newExperience.duration}
@@ -842,9 +855,9 @@ const AdminPanelContent = () => {
                         duration: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                    className="mb-2"
                   />
-                  <input
+                  <Input
                     type="text"
                     placeholder="Role"
                     value={newExperience.role}
@@ -854,11 +867,11 @@ const AdminPanelContent = () => {
                         role: e.target.value,
                       })
                     }
-                    className="w-full p-3 bg-gray-100 border rounded-lg mb-2"
+                    className="mb-2"
                   />
                   <button
                     onClick={handleSaveExperience}
-                    className="p-3 flex justify-center gap-2 items-center bg-foreground hover:bg-gray-700 text-white rounded-lg w-full"
+                    className="p-3 flex justify-center gap-2 items-center bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg w-full"
                   >
                     {newExperience.id ? "Update Experience" : "Add Experience"}
                   </button>
@@ -872,7 +885,7 @@ const AdminPanelContent = () => {
                           role: "",
                         })
                       }
-                      className="p-3 bg-gray-400 hover:bg-gray-300 text-white rounded-lg w-full mt-2"
+                      className="p-3 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg w-full mt-2"
                     >
                       Cancel
                     </button>
