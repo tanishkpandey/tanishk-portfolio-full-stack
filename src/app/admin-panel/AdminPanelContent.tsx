@@ -425,7 +425,6 @@ const AdminPanelContent = () => {
   return (
     <div className=" min-h-screen">
       <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        
         {/* Profile Section */}
         <Card className="p-6 bg-white border rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Profile</h2>

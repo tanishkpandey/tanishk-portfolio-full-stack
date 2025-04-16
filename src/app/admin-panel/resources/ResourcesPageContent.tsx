@@ -28,7 +28,7 @@ interface Resource {
   id?: string
   title: string
   description: string
-  link: string
+  url: string
   category: string
 }
 
@@ -38,7 +38,7 @@ export default function ResourcesPageContent() {
   const [newResource, setNewResource] = useState<Resource>({
     title: "",
     description: "",
-    link: "",
+    url: "",
     category: "",
   })
   const [isEditing, setIsEditing] = useState(false)
@@ -81,7 +81,7 @@ export default function ResourcesPageContent() {
         await setDoc(doc(db, "Resources", editingResource.id), {
           title: newResource.title,
           description: newResource.description,
-          link: newResource.link,
+          url: newResource.url,
           category: newResource.category,
         })
         toast({
@@ -94,7 +94,7 @@ export default function ResourcesPageContent() {
         await setDoc(docRef, {
           title: newResource.title,
           description: newResource.description,
-          link: newResource.link,
+          url: newResource.url,
           category: newResource.category,
         })
         toast({
@@ -106,7 +106,7 @@ export default function ResourcesPageContent() {
       setNewResource({
         title: "",
         description: "",
-        link: "",
+        url: "",
         category: "",
       })
       setEditingResource(null)
@@ -154,7 +154,7 @@ export default function ResourcesPageContent() {
     setNewResource({
       title: "",
       description: "",
-      link: "",
+      url: "",
       category: "",
     })
     setEditingResource(null)
@@ -164,14 +164,14 @@ export default function ResourcesPageContent() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Resources</h1>
+        <h1 className="text-2xl font-bold">Your Resources</h1>
         <Button
           onClick={() => {
             setEditingResource(null)
             setNewResource({
               title: "",
               description: "",
-              link: "",
+              url: "",
               category: "",
             })
             setIsEditing(true)
@@ -217,14 +217,14 @@ export default function ResourcesPageContent() {
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="link">Link</label>
+              <label htmlFor="url">Link</label>
               <Input
-                id="link"
-                value={newResource.link}
+                id="url"
+                value={newResource.url}
                 onChange={(e) =>
-                  setNewResource({ ...newResource, link: e.target.value })
+                  setNewResource({ ...newResource, url: e.target.value })
                 }
-                placeholder="Enter resource link"
+                placeholder="Enter resource url"
               />
             </div>
             <div className="space-y-2">
@@ -303,7 +303,7 @@ export default function ResourcesPageContent() {
                 </span>
               </div>
               <a
-                href={resource.link}
+                href={resource.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline"
