@@ -12,9 +12,9 @@ import {
 } from "firebase/firestore"
 import { db } from "@/app/firebase/config"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { BiSolidEdit } from "react-icons/bi"
-import { RiAddCircleLine } from "react-icons/ri"
-import { RiDeleteBin3Line } from "react-icons/ri"
+import { RiAddCircleLine, RiDeleteBin3Line } from "react-icons/ri"
 import { MdOutlineCancel } from "react-icons/md"
 import { GoListUnordered } from "react-icons/go"
 import { useToast } from "@/components/ui/use-toast"
@@ -30,7 +30,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Loading } from "@/components/ui/loading"
-import { Input } from "@/components/ui/input"
 
 interface Profile {
   name?: string
@@ -49,7 +48,6 @@ interface Project {
   description?: string
   stack?: string
   liveLink?: string
-  [key: string]: unknown
 }
 
 interface Experience {

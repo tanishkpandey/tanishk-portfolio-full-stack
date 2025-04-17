@@ -1,20 +1,14 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+import { Input } from "@/components/ui/input"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
 } from "@/components/ui/card"
-import {
-  Folder,
-  Search,
-  Grid,
-  List,
-  ExternalLink,
-  Link,
-} from "lucide-react"
+import { Folder, Search, Grid, List, ExternalLink, Link } from "lucide-react"
 import { db } from "../firebase/config"
 import { collection, getDocs } from "firebase/firestore"
 
@@ -265,7 +259,7 @@ const ResourcesPage = () => {
               <div className="w-full md:w-1/2">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                  <input
+                  <Input
                     type="text"
                     placeholder="Search resources..."
                     className="w-full pl-10 text-[14px] pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -317,7 +311,6 @@ const ResourcesPage = () => {
                           ? "border-b-2 border-myBlack text-white"
                           : "hover:bg-muted text-gray-700"
                       }`}
-
                       onClick={() => setActiveCategory(category.name)}
                     >
                       <span>{category.name}</span>
