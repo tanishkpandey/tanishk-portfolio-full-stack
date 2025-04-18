@@ -85,7 +85,7 @@ export const Projects = () => {
             <CardContent className="pt-6 h-full">
               <div className="flex flex-col h-full">
                 {/* Title */}
-                <div className="font-semibold  text-foreground text-primary">
+                <div className="font-semibold  text-foreground ">
                   {p.title}
                 </div>
                 {/* Description */}
@@ -97,7 +97,7 @@ export const Projects = () => {
                   <Link
                     href={p.liveLink || "#"}
                     target="_blank"
-                    className="flex items-center text-foreground underline gap-2 text-sm text-primary hover:underline"
+                    className="flex items-center text-foreground underline gap-2 text-sm hover:underline"
                   >
                     View Project
                     <LuExternalLink />

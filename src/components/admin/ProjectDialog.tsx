@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { db } from "@/app/firebase/config"
-import { doc, setDoc, deleteDoc } from "firebase/firestore"
+import { doc, setDoc, deleteDoc, collection } from "firebase/firestore"
 import { BaseDialog } from "./BaseDialog"
 
 interface ProjectDialogProps {
