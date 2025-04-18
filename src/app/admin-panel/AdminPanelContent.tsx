@@ -195,10 +195,12 @@ const AdminPanelContent = () => {
         console.error("Error in firebase initialization")
         return
       }
+
       if (newProject.id) {
         // Update Project
+        const { ...projectData } = newProject 
         const docRef = doc(db, "Projects", newProject.id)
-        await updateDoc(docRef, newProject)
+        await updateDoc(docRef, projectData)
         setProjects((prev) =>
           prev.map((proj) => (proj.id === newProject.id ? newProject : proj))
         )
@@ -207,7 +209,9 @@ const AdminPanelContent = () => {
         const docRef = await addDoc(collection(db, "Projects"), newProject)
         setProjects([...projects, { id: docRef.id, ...newProject }])
       }
+
       setNewProject({ title: "", description: "", stack: "", liveLink: "" })
+
       toast({
         variant: "success",
         title: "Success",
