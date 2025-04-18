@@ -12,7 +12,9 @@ import { AboutDialog } from "@/components/admin/AboutDialog"
 import { SkillsDialog } from "@/components/admin/SkillsDialog"
 import { ExperienceDialog } from "@/components/admin/ExperienceDialog"
 
-interface Profile {
+// Updated interfaces with required properties
+
+interface PartialProfile {
   name?: string
   role?: string
   description?: string
@@ -24,6 +26,14 @@ interface Profile {
 }
 
 interface Project {
+  id: string
+  title: string
+  description: string
+  stack: string
+  liveLink: string
+}
+
+interface PartialProject {
   id?: string
   title?: string
   description?: string
@@ -31,7 +41,7 @@ interface Project {
   liveLink?: string
 }
 
-interface Experience {
+interface PartialExperience {
   id?: string
   role?: string
   company?: string
@@ -42,10 +52,10 @@ interface Experience {
 export default function HomePageContent() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(true)
-  const [profile, setProfile] = useState<Profile>({})
+  const [profile, setProfile] = useState<PartialProfile>({})
   const [about, setAbout] = useState<string>("")
-  const [experience, setExperience] = useState<Experience[]>([])
-  const [projects, setProjects] = useState<Project[]>([])
+  const [experience, setExperience] = useState<PartialExperience[]>([])
+  const [projects, setProjects] = useState<PartialProject[]>([])
   const [skills, setSkills] = useState<string[]>([])
 
   const fetchData = async () => {
@@ -59,7 +69,7 @@ export default function HomePageContent() {
       // Fetch Profile
       const profileSnapshot = await getDocs(collection(db, "Profile"))
       const profileData = profileSnapshot.docs[0]?.data() || {}
-      setProfile(profileData)
+      setProfile(profileData as PartialProfile)
 
       // Fetch About
       const aboutSnapshot = await getDocs(collection(db, "About"))
@@ -71,7 +81,7 @@ export default function HomePageContent() {
       const projectsData = projectsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }))
+      })) as PartialProject[]
       setProjects(projectsData)
 
       // Fetch Skills
@@ -84,7 +94,7 @@ export default function HomePageContent() {
       const experienceData = experienceSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }))
+      })) as PartialExperience[]
       setExperience(experienceData)
     } catch (error) {
       console.error("Error fetching data:", error)
@@ -108,7 +118,6 @@ export default function HomePageContent() {
 
   return (
     <div className="space-y-6">
-      
       {/* Profile Card */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -123,22 +132,26 @@ export default function HomePageContent() {
             </div>
             <p className="text-sm">{profile.description}</p>
             <div className="flex gap-4">
-              <a
-                href={`https://github.com/${profile.github}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:underline"
-              >
-                GitHub
-              </a>
-              <a
-                href={`https://linkedin.com/in/${profile.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:underline"
-              >
-                LinkedIn
-              </a>
+              {profile.github && (
+                <a
+                  href={`https://github.com/${profile.github}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline"
+                >
+                  GitHub
+                </a>
+              )}
+              {profile.linkedin && (
+                <a
+                  href={`https://linkedin.com/in/${profile.linkedin}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline"
+                >
+                  LinkedIn
+                </a>
+              )}
             </div>
           </div>
         </CardContent>
@@ -175,17 +188,24 @@ export default function HomePageContent() {
                       <span className="text-sm text-muted-foreground">
                         {project.stack}
                       </span>
-                      <a
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-primary hover:underline"
-                      >
-                        View Project
-                      </a>
+                      {project.liveLink && (
+                        <a
+                          href={project.liveLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-primary hover:underline"
+                        >
+                          View Project
+                        </a>
+                      )}
                     </div>
                   </div>
-                  <ProjectDialog project={project} onSuccess={fetchData} />
+                  {project.id && (
+                    <ProjectDialog 
+                      project={project as Project} 
+                      onSuccess={fetchData} 
+                    />
+                  )}
                 </div>
               </div>
             ))}
@@ -240,7 +260,18 @@ export default function HomePageContent() {
                       ))}
                     </ul>
                   </div>
-                  <ExperienceDialog experience={exp} onSuccess={fetchData} />
+                  {exp.id && exp.role && exp.company && exp.duration && exp.description && (
+                    <ExperienceDialog 
+                      experience={{
+                        id: exp.id,
+                        role: exp.role,
+                        company: exp.company,
+                        duration: exp.duration,
+                        description: exp.description
+                      }} 
+                      onSuccess={fetchData} 
+                    />
+                  )}
                 </div>
               </div>
             ))}
