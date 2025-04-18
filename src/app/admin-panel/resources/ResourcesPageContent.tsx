@@ -53,6 +53,10 @@ export default function ResourcesPageContent() {
   const fetchResources = async () => {
     try {
       setIsLoading(true)
+      if (!db) {
+        console.error("Firestore is not initialized.")
+        return
+      }
       const resourcesSnapshot = await getDocs(collection(db, "Resources"))
       const resourcesData = resourcesSnapshot.docs.map((doc) => ({
         id: doc.id,
