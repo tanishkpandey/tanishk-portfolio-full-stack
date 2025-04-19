@@ -9,7 +9,7 @@ export const Footer = () => {
       <p>
         Developed by{" "}
         <span className="font-semibold">Tanishk</span> with
-        <span className="text-red-500 mx-1">❤️</span> in India.
+        <span className="text-red-500 mx-1">❤️</span> in India
       </p>
     </footer>
   )
