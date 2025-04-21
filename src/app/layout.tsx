@@ -29,7 +29,10 @@ export default function RootLayout({
           <main className=" mx-auto px-4">
             <NavbarWrapper />
             <Toaster position="top-center" reverseOrder={false} />
-            {children}
+            <div className="opacity-0 animate-fade-in transition-opacity duration-500">
+              {children}
+            </div>
+
             <FooterWrapper />
           </main>
         </ThemeProvider>
