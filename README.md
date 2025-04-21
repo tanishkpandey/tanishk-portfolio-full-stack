@@ -8,7 +8,7 @@ This is a **Next.js** project built with **TypeScript**, **Tailwind CSS**, and *
 - Built with **Next.js** and **TypeScript** for performance and scalability.
 - Dynamic **resume section** for visitors.
 - **Admin authentication** to modify content.
-- Styled with **Tailwind CSS** for a responsive UI.
+- Styled with **Tailwind CSS** for a responsive UI.. 
 
 ### **Backend**
 - **Firebase Authentication** for secure admin login.
