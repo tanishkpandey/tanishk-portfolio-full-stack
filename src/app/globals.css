@@ -12,7 +12,7 @@ html {
 
 @layer base {
   :root {
-    --background: 0 0% 95%;
+    --background: 0 0% 92%;
     --foreground: 220 13% 18%;
     --rforeground: 0 0% 98%;
     --card: 0 0% 96%;
@@ -43,10 +43,10 @@ html {
   }
 
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 6%;
     --foreground: 0 0% 98%;
     --rforeground: 220 13% 18%;
-    --card: 0 0% 5%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;

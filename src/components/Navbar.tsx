@@ -3,11 +3,20 @@
 import { useState, useRef, useEffect } from "react"
 import { ThemeToggle } from "./theme-toggle"
 import Link from "next/link"
+import { auth } from "@/app/firebase/config"
+import { onAuthStateChanged, User } from "firebase/auth"
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuHeight, setMenuHeight] = useState(0)
   const menuRef = useRef<HTMLDivElement>(null)
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => setUser(firebaseUser))
+
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     if (menuRef.current) {
@@ -54,6 +63,14 @@ export const Navbar = () => {
             >
               Resources
             </Link>
+            {user && (
+              <Link
+                href="/admin-panel"
+                className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+                >
+                Dashboard
+              </Link>
+            )}
             <ThemeToggle />
           </div>
 
@@ -129,6 +146,14 @@ export const Navbar = () => {
             >
               Resources
             </Link>
+            {user && (
+              <Link
+                href="/admin-panel"
+                className="block text-foreground hover:text-primary px-3 py-2 rounded-md text-base font-medium"
+              >
+                Dashboard
+              </Link>
+            )}
           </div>
         </div>
       </div>
