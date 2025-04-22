@@ -148,7 +148,7 @@ export const Profile = () => {
 
           <Button
             asChild
-            className="w-full py-3 px-4 text-sm text-white tracking-wide rounded-lg bg-myBlack hover:bg-myBlack/90"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground p-3 rounded-lg w-full shadow-md focus:ring-2 focus:ring-ring focus:outline-none"
           >
             <Link
               target="_blank"

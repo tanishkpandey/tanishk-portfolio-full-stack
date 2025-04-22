@@ -1,28 +1,26 @@
-import { signOut } from "firebase/auth";
-import { auth } from "@/app/firebase/config";
-import toast from "react-hot-toast";
+import { signOut } from "firebase/auth"
+import { auth } from "@/app/firebase/config"
+import toast from "react-hot-toast"
 
 const AdminNavbar = () => {
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await signOut(auth)
       document.cookie =
-        "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      location.reload();
-      toast.success("Logout successful!");
+        "userToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"
+      location.reload()
+      toast.success("Logout successful!")
     } catch (error: unknown) {
-      const errorMessage = (error as { message?: string })?.message;
-      toast.error(errorMessage || "Failed to logout. Please try again.");
+      const errorMessage = (error as { message?: string })?.message
+      toast.error(errorMessage || "Failed to logout. Please try again.")
     }
-  };
+  }
 
   return (
     <nav className="bg-white shadow mb-5 text-gray-800 p-6 flex items-center justify-between rounded-b-lg">
       {/* Left Section: Branding or Title */}
       <div>
-        <h2 className="text-2xl font-bold tracking-wide">
-          Tanishk
-        </h2>
+        <h2 className="text-2xl font-bold tracking-wide">Tanishk</h2>
       </div>
 
       {/* Right Section: Navigation Links and Logout */}
@@ -35,7 +33,7 @@ const AdminNavbar = () => {
         </button>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default AdminNavbar;
+export default AdminNavbar
