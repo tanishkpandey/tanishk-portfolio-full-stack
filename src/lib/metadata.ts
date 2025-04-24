@@ -1,13 +1,13 @@
-import { Metadata } from 'next'
+import { Metadata } from "next"
 
 // TODO: Update metadata
 
 export function constructMetadata({
-  title = 'Tanishk Pandey', // TODO: Add a custom title
+  title = "Tanishk Pandey", // TODO: Add a custom title
   description = "I am a software engineer with a passion for building scalable and efficient web applications.", // TODO: Add a custom description
-  image = '/thumbnail.png', // TODO: Add a custom image
-  icons = '/avatar.svg', // TODO: Add a custom icon
-  noIndex = false
+  image = "/Thumbnail.jpg", // TODO: Add a custom image
+  icons = "/icon.png",
+  noIndex = false,
 }: {
   title?: string
   description?: string
@@ -21,22 +21,15 @@ export function constructMetadata({
     openGraph: {
       title,
       description,
-      images: [image]
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
       images: [image],
-      creator: '@chrislonzo'
     },
     icons,
-    metadataBase: new URL('https://www.chrislonzo.com'),
+    metadataBase: new URL("https://tanishkpandey.vercel.app/"),
     ...(noIndex && {
       robots: {
         index: false,
-        follow: false
-      }
-    })
+        follow: false,
+      },
+    }),
   }
 }
