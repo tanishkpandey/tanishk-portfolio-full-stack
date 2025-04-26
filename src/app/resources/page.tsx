@@ -17,7 +17,6 @@ import {
   List,
   ExternalLink,
   Link,
-  Calendar,
   FileText,
   Video,
   BookOpen,
@@ -26,7 +25,6 @@ import {
   Edit,
   Users,
   GraduationCap,
-  Clock,
 } from "lucide-react"
 import { db } from "../firebase/config"
 import { collection, getDocs } from "firebase/firestore"
@@ -254,31 +252,6 @@ const ResourcesPage = () => {
     return aOrder - bOrder
   })
 
-  const getResourceTypeIcon = (type: string) => {
-    switch (type?.toLowerCase()) {
-      case "article":
-        return <FileText className="size-4" />
-      case "video":
-        return <Video className="size-4" />
-      case "tutorial":
-        return <BookOpen className="size-4" />
-      case "documentation":
-        return <FileCode className="size-4" />
-      case "tool":
-        return <Edit className="size-4" />
-      case "library":
-        return <Package className="size-4" />
-      case "blog":
-        return <Edit className="size-4" />
-      case "community":
-        return <Users className="size-4" />
-      case "course":
-        return <GraduationCap className="size-4" />
-      default:
-        return <Link className="size-4" />
-    }
-  }
-
   return (
     <div className="container max-w-screen-lg mx-auto py-8">
       {/* Search and view options */}
@@ -442,14 +415,12 @@ const ResourcesPage = () => {
                         >
                           <CardHeader className="pb-2">
                             <div className="flex items-center justify-between mb-2">
-                              
                               <Badge
                                 variant="secondary"
                                 className=" p-3 rounded text-foreground"
                               >
-                                {getResourceTypeIcon(resource?.type)}
+                                <Link className="size-4" />
                               </Badge>
-                              
                             </div>
                             <CardTitle className="text-lg">
                               {resource.title}
