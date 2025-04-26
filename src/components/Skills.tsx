@@ -40,7 +40,7 @@ export const Skills = () => {
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle>Skills</CardTitle>
+        <CardTitle>Tech Stack</CardTitle>
       </CardHeader>
       <CardContent>
         {loading ? (

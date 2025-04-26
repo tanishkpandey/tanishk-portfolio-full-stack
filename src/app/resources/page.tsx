@@ -6,11 +6,31 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card"
-import { Folder, Search, Grid, List, ExternalLink, Link } from "lucide-react"
+import {
+  Folder,
+  Search,
+  Grid,
+  List,
+  ExternalLink,
+  Link,
+  Calendar,
+  FileText,
+  Video,
+  BookOpen,
+  FileCode,
+  Package,
+  Edit,
+  Users,
+  GraduationCap,
+  Clock,
+} from "lucide-react"
 import { db } from "../firebase/config"
 import { collection, getDocs } from "firebase/firestore"
+import { Badge } from "@/components/ui/badge"
 
 interface ResourcesCategory {
   id: string
@@ -234,6 +254,31 @@ const ResourcesPage = () => {
     return aOrder - bOrder
   })
 
+  const getResourceTypeIcon = (type: string) => {
+    switch (type?.toLowerCase()) {
+      case "article":
+        return <FileText className="size-4" />
+      case "video":
+        return <Video className="size-4" />
+      case "tutorial":
+        return <BookOpen className="size-4" />
+      case "documentation":
+        return <FileCode className="size-4" />
+      case "tool":
+        return <Edit className="size-4" />
+      case "library":
+        return <Package className="size-4" />
+      case "blog":
+        return <Edit className="size-4" />
+      case "community":
+        return <Users className="size-4" />
+      case "course":
+        return <GraduationCap className="size-4" />
+      default:
+        return <Link className="size-4" />
+    }
+  }
+
   return (
     <div className="container max-w-screen-lg mx-auto py-8">
       {/* Search and view options */}
@@ -388,30 +433,42 @@ const ResourcesPage = () => {
                 <>
                   {/* Resources Grid View */}
                   {viewMode === "grid" ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {sortedResources.map((resource) => (
                         <Card
                           key={resource.id}
-                          className="h-full hover:shadow-md transition cursor-pointer"
+                          className="overflow-hidden h-full flex flex-col hover:shadow-lg transition cursor-pointer"
                           onClick={() => window.open(resource.url, "_blank")}
                         >
                           <CardHeader className="pb-2">
-                            <div className="flex items-start justify-between">
-                              <div className="flex items-center justify-end">
-                                <div className="text-[16px]">
-                                  {resource.title}
-                                </div>
-                              </div>
-                              <div className="flex mt-1 items-center">
-                                <ExternalLink className="size-3" />
-                              </div>
+                            <div className="flex items-center justify-between mb-2">
+                              
+                              <Badge
+                                variant="secondary"
+                                className=" p-3 rounded text-foreground"
+                              >
+                                {getResourceTypeIcon(resource?.type)}
+                              </Badge>
+                              
                             </div>
-                          </CardHeader>
-                          <CardContent>
-                            <CardDescription className=" text-[14px] line-clamp-2">
+                            <CardTitle className="text-lg">
+                              {resource.title}
+                            </CardTitle>
+                            <CardDescription className="line-clamp-2">
                               {resource.description}
                             </CardDescription>
-                          </CardContent>
+                          </CardHeader>
+
+                          <CardFooter className="border-t pt-4 flex flex-col items-start">
+                            <div className="flex items-center justify-between w-full text-xs text-gray-500">
+                              <Badge
+                                variant="secondary"
+                                className="text-foreground"
+                              >
+                                {resource.category}
+                              </Badge>
+                            </div>
+                          </CardFooter>
                         </Card>
                       ))}
                     </div>
@@ -447,7 +504,6 @@ const ResourcesPage = () => {
                       </CardContent>
                     </Card>
                   )}
-
                   {/* Empty state */}
                   {sortedResources.length === 0 && !loading && (
                     <div className="text-center py-12">

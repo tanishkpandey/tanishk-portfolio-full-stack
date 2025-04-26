@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 
 const CodeSnippetsPage = () => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -191,31 +192,43 @@ const CodeSnippetsPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl text-foreground font-bold mb-8">Code Snippets</h1>
-
-      {/* Search and filters */}
+    <div className="container max-w-screen-lg mx-auto py-8">
       <div className="mb-8">
         <Card>
-          <CardContent className="pt-6">
+          <CardHeader>
+            <h1 className="text-3xl text-foreground font-bold mb-3">
+              Code Snippets
+            </h1>
+
+            <CardContent>
+              <p className="text-muted-foreground text-[14px] -ml-5">
+                Here&apos;s a collection of my go-to resources that I use in my
+                projects. <br /> Feel free to explore and grab anything you find
+                useful — they&apos;re all handpicked with 💖!
+              </p>
+            </CardContent>
+          </CardHeader>
+          <CardContent className="-mt-6 pb-6">
             <div className="flex flex-col space-y-4">
               {/* Search bar */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                <input
-                  type="text"
-                  placeholder="Search snippets by title, description, or tags..."
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+              <div className="w-full md:w-1/2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
+                  <Input
+                    type="text"
+                    placeholder="Search snippets by title, description, or tags..."
+                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
               </div>
 
               {/* Filters */}
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center">
                   <Filter className="size-4 mr-2 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-foreground">
                     Filters:
                   </span>
                 </div>
