@@ -16,15 +16,7 @@ import {
   Grid,
   List,
   ExternalLink,
-  Link,
-  FileText,
-  Video,
-  BookOpen,
-  FileCode,
-  Package,
-  Edit,
-  Users,
-  GraduationCap,
+  Link
 } from "lucide-react"
 import { db } from "../firebase/config"
 import { collection, getDocs } from "firebase/firestore"
