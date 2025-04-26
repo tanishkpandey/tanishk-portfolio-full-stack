@@ -480,7 +480,7 @@ const ResourcesPage = () => {
                           {sortedResources.map((resource) => (
                             <li
                               key={resource.id}
-                              className="-ml-6 p-3 rounded flex items-center justify-between hover:bg-slate-50 transition cursor-pointer"
+                              className="-ml-6 p-3 rounded flex items-center justify-between hover:bg-background transition cursor-pointer"
                               onClick={() =>
                                 window.open(resource.url, "_blank")
                               }
