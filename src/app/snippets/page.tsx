@@ -1,16 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import {
-  Search,
-  Filter,
-  Laptop,
-  Server,
-  Database,
-  Code,
-  Eye,
-  BookmarkPlus,
-  Calendar,
-} from "lucide-react"
+import { Search, Filter, Laptop, Server, Database, Code } from "lucide-react"
 import {
   Card,
   CardContent,
@@ -20,12 +10,33 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Copy, Maximize2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+
 
 const CodeSnippetsPage = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedLanguage, setSelectedLanguage] = useState("All")
+  const [showFilters, setShowFilters] = useState(false)
+  const [copiedId, setCopiedId] = useState<number | null>(null)
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [selectedSnippet, setSelectedSnippet] = useState<any>(null)
 
+  const handleCopy = (e: React.MouseEvent, snippetId: number, text: string) => {
+    e.stopPropagation()
+    navigator.clipboard.writeText(text)
+    setCopiedId(snippetId)
+    setTimeout(() => setCopiedId(null), 2000) // Reset after 2 seconds
+  }
+
+  const openPreview = (e: React.MouseEvent, snippet: unknown) => {
+    e.stopPropagation()
+    setSelectedSnippet(snippet)
+    setPreviewOpen(true)
+  }
   // Dummy code snippets data
   const codeSnippets = [
     {
@@ -210,69 +221,76 @@ const CodeSnippetsPage = () => {
           </CardHeader>
           <CardContent className="-mt-6 pb-6">
             <div className="flex flex-col space-y-4">
-              {/* Search bar */}
-              <div className="w-full md:w-1/2">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                  <Input
-                    type="text"
-                    placeholder="Search snippets by title, description, or tags..."
-                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                {/* Search bar */}
+                <div className="w-full md:w-1/2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
+                    <Input
+                      type="text"
+                      placeholder="Search snippets by title, description, or tags..."
+                      className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    className={`p-2 rounded-md border transition ${
+                      showFilters ? "bg-muted" : "hover:bg-muted/60"
+                    }`}
+                    onClick={() => setShowFilters(!showFilters)}
+                    title="Filters"
+                  >
+                    <Filter className="size-4" />
+                  </button>
                 </div>
               </div>
 
               {/* Filters */}
-              <div className="flex flex-wrap gap-4">
-                <div className="flex items-center">
-                  <Filter className="size-4 mr-2 text-gray-500" />
-                  <span className="text-sm font-medium text-foreground">
-                    Filters:
-                  </span>
-                </div>
+              {showFilters && (
+                <div className="flex flex-wrap gap-4">
+                  {/* Category filter */}
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-foreground">Category:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {categories.map((category) => (
+                        <div
+                          key={category}
+                          className={`px-3 py-1 text- cursor-pointer text-xs rounded-full border transition ${
+                            selectedCategory === category &&
+                            "bg-primary hover:none text-primary-foreground"
+                          }`}
+                          onClick={() => setSelectedCategory(category)}
+                        >
+                          {category}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-                {/* Category filter */}
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Category:</span>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        className={`px-3 py-1 text-xs rounded-full transition ${
-                          selectedCategory === category
-                            ? "bg-blue-500 text-white"
-                            : "bg-slate-100 hover:bg-slate-200"
-                        }`}
-                        onClick={() => setSelectedCategory(category)}
-                      >
-                        {category}
-                      </button>
-                    ))}
+                  {/* Language filter */}
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-foreground">Language:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {languages.map((language) => (
+                        <button
+                          key={language}
+                          className={`px-3 py-1 text-xs border rounded-full transition ${
+                            selectedLanguage === language &&
+                            "bg-primary hover:none text-primary-foreground"
+                          }`}
+                          onClick={() => setSelectedLanguage(language)}
+                        >
+                          {language}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-
-                {/* Language filter */}
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-500">Language:</span>
-                  <div className="flex flex-wrap gap-2">
-                    {languages.map((language) => (
-                      <button
-                        key={language}
-                        className={`px-3 py-1 text-xs rounded-full transition ${
-                          selectedLanguage === language
-                            ? "bg-blue-500 text-white"
-                            : "bg-slate-100 hover:bg-slate-200"
-                        }`}
-                        onClick={() => setSelectedLanguage(language)}
-                      >
-                        {language}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -288,15 +306,13 @@ const CodeSnippetsPage = () => {
           >
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
+                <Badge
+                  variant="secondary"
+                  className="flex p-1 items-center space-x-2"
+                >
                   {getCategoryIcon(snippet.category)}
-                  <span className="text-xs px-2 py-1 bg-slate-100 rounded-full">
-                    {snippet.category}
-                  </span>
-                </div>
-                <span className="text-xs font-mono px-2 py-1 bg-slate-100 rounded-md">
-                  {snippet.language}
-                </span>
+                  <span>{snippet.category}</span>
+                </Badge>
               </div>
               <CardTitle className="text-lg">{snippet.title}</CardTitle>
               <CardDescription className="line-clamp-2">
@@ -305,7 +321,39 @@ const CodeSnippetsPage = () => {
             </CardHeader>
 
             <CardContent className="flex-grow py-4">
-              <div className="bg-slate-50 rounded-lg p-3 overflow-hidden">
+              <div className="bg-slate-50 rounded-lg p-3 overflow-hidden relative">
+                <div className="absolute right-2 top-2 flex space-x-1">
+                  {/* <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild> */}
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-6 w-6 bg-white"
+                          onClick={(e) =>
+                            handleCopy(e, snippet.id, snippet.preview)
+                          }
+                        >
+                          <Copy className="size-3" />
+                        </Button>
+                      {/* </TooltipTrigger>
+                      <TooltipContent>
+                        {copiedId === snippet.id
+                          ? "Copied!"
+                          : "Copy to clipboard"}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider> */}
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-6 w-6 bg-white"
+                    onClick={(e) => openPreview(e, snippet)}
+                  >
+                    <Maximize2 className="size-3" />
+                  </Button>
+                </div>
                 <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-slate-700 line-clamp-3">
                   {snippet.preview}
                 </pre>
@@ -313,37 +361,43 @@ const CodeSnippetsPage = () => {
             </CardContent>
 
             <CardFooter className="border-t pt-4 flex flex-col items-start space-y-3">
-              <div className="flex items-center justify-between w-full text-xs text-gray-500">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center">
-                    <Eye className="size-3 mr-1" />
-                    {snippet.views}
-                  </div>
-                  <div className="flex items-center">
-                    <BookmarkPlus className="size-3 mr-1" />
-                    {snippet.saves}
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Calendar className="size-3 mr-1" />
-                  {snippet.date}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-1 w-full">
-                {snippet.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="text-xs bg-slate-100 px-2 py-1 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <Badge
+                variant="secondary"
+                className="text-xs font-mono px-2 py-1"
+              >
+                {snippet.language}
+              </Badge>
             </CardFooter>
           </Card>
         ))}
       </div>
+
+      {/* Preview Modal */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{selectedSnippet?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="bg-slate-50 rounded-lg p-4 mt-4 relative">
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-4 top-4"
+              onClick={() => {
+                if (selectedSnippet) {
+                  navigator.clipboard.writeText(selectedSnippet.preview)
+                  // Optional: add a visual indicator that it was copied
+                }
+              }}
+            >
+              <Copy className="size-4" />
+            </Button>
+            <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-sm">
+              {selectedSnippet?.preview}
+            </pre>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Empty state */}
       {filteredSnippets.length === 0 && (
