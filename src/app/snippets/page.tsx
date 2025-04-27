@@ -23,7 +23,7 @@ const CodeSnippetsPage = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [copiedId, setCopiedId] = useState<number | null>(null)
   const [previewOpen, setPreviewOpen] = useState(false)
-  const [selectedSnippet, setSelectedSnippet] = useState<any>(null)
+  const [selectedSnippet, setSelectedSnippet] = useState<unknown>(null)
 
   const handleCopy = (e: React.MouseEvent, snippetId: number, text: string) => {
     e.stopPropagation()
@@ -378,7 +378,7 @@ const CodeSnippetsPage = () => {
           <DialogHeader>
             <DialogTitle>{selectedSnippet?.title}</DialogTitle>
           </DialogHeader>
-          <div className="bg-slate-50 rounded-lg p-4 mt-4 relative">
+          <div className="bg-slate-50 rounded-lg p-4 mt-4 r elative">
             <Button
               variant="outline"
               size="icon"
@@ -386,7 +386,7 @@ const CodeSnippetsPage = () => {
               onClick={() => {
                 if (selectedSnippet) {
                   navigator.clipboard.writeText(selectedSnippet.preview)
-                  // Optional: add a visual indicator that it was copied
+                  // Optional: add a visual indicator that it was copied/
                 }
               }}
             >
