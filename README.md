@@ -13,7 +13,7 @@ This is a **Next.js** project built with **TypeScript**, **Tailwind CSS**, and *
 ### **Backend**
 - **Firebase Authentication** for secure admin login.
 - **Firestore Database** for real-time content updates.
-. 
+
 ---
 
 ## 📌 Getting Started
