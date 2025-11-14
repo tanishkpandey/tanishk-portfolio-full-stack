@@ -134,12 +134,12 @@ export const Navbar = () => {
             >
               Blogs
             </Link> */}
-            <Link
+            {/* <Link
               href="/snippets"
               className="block text-foreground hover:text-primary px-3 py-2 rounded-md text-base font-medium"
             >
               Snippets
-            </Link>
+            </Link> */}
             <Link
               href="/resources"
               className="block text-foreground hover:text-primary px-3 py-2 rounded-md text-base font-medium"
