@@ -51,12 +51,12 @@ export const Navbar = () => {
             >
               Blogs
             </Link> */}
-            <Link
+            {/* <Link
               href="/snippets"
               className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
             >
               Snippets
-            </Link>
+            </Link> */}
             <Link
               href="/resources"
               className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
