@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Copy, Maximize2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+// import { Copy, Maximize2 } from "lucide-react"
+// import { Button } from "@/components/ui/button"
+// import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 
 const CodeSnippetsPage = () => {
@@ -21,126 +21,25 @@ const CodeSnippetsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedLanguage, setSelectedLanguage] = useState("All")
   const [showFilters, setShowFilters] = useState(false)
-  const [copiedId, setCopiedId] = useState<number | null>(null)
-  const [previewOpen, setPreviewOpen] = useState(false)
-  const [selectedSnippet, setSelectedSnippet] = useState<unknown>(null)
+  // const [copiedId, setCopiedId] = useState<number | null>(null)
+  // const [previewOpen, setPreviewOpen] = useState(false)
+  // const [selectedSnippet, setSelectedSnippet] = useState<unknown>(null)
 
-  const handleCopy = (e: React.MouseEvent, snippetId: number, text: string) => {
-    e.stopPropagation()
-    navigator.clipboard.writeText(text)
-    setCopiedId(snippetId)
-    setTimeout(() => setCopiedId(null), 2000) // Reset after 2 seconds
-  }
+  // const handleCopy = (e: React.MouseEvent, snippetId: number, text: string) => {
+  //   e.stopPropagation()
+  //   navigator.clipboard.writeText(text)
+  //   setCopiedId(snippetId)
+  //   setTimeout(() => setCopiedId(null), 2000) // Reset after 2 seconds
+  // }
 
-  const openPreview = (e: React.MouseEvent, snippet: unknown) => {
-    e.stopPropagation()
-    setSelectedSnippet(snippet)
-    setPreviewOpen(true)
-  }
+  // const openPreview = (e: React.MouseEvent, snippet: unknown) => {
+  //   e.stopPropagation()
+  //   setSelectedSnippet(snippet)
+  //   setPreviewOpen(true)
+  // }
   // Dummy code snippets data
   const codeSnippets = [
-    {
-      id: 1,
-      title: "React useEffect Cleanup",
-      description:
-        "A pattern for properly cleaning up side effects in React's useEffect hook",
-      preview:
-        "useEffect(() => { /* ... */ return () => { /* cleanup */ }; }, [dependency]);",
-      language: "jsx",
-      category: "Frontend",
-      tags: ["React", "Hooks", "useEffect"],
-      author: "Jane Smith",
-      date: "April 5, 2025",
-      views: 321,
-      saves: 45,
-    },
-    {
-      id: 2,
-      title: "Express Error Middleware",
-      description:
-        "A middleware for handling errors in Express.js applications",
-      preview:
-        "app.use((err, req, res, next) => { /* error handling logic */ });",
-      language: "javascript",
-      category: "Backend",
-      tags: ["Express", "Error Handling", "Middleware"],
-      author: "Mike Johnson",
-      date: "April 2, 2025",
-      views: 256,
-      saves: 32,
-    },
-    {
-      id: 3,
-      title: "PostgreSQL JSON Query",
-      description:
-        "Query for extracting and filtering data from JSON fields in PostgreSQL",
-      preview:
-        "SELECT id, data->>'name' as name FROM users WHERE data->>'role' = 'admin';",
-      language: "sql",
-      category: "Database",
-      tags: ["PostgreSQL", "JSON", "SQL"],
-      author: "Alex Chen",
-      date: "March 28, 2025",
-      views: 189,
-      saves: 27,
-    },
-    {
-      id: 4,
-      title: "Tailwind CSS Responsive Grid",
-      description: "A responsive grid layout using Tailwind CSS utilities",
-      preview:
-        '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">...</div>',
-      language: "html",
-      category: "Frontend",
-      tags: ["Tailwind", "CSS", "Responsive"],
-      author: "Sarah Williams",
-      date: "March 25, 2025",
-      views: 235,
-      saves: 41,
-    },
-    {
-      id: 5,
-      title: "NextJS API Route",
-      description:
-        "A simple API route handler in Next.js with request validation",
-      preview:
-        "export default async function handler(req, res) { /* API logic */ }",
-      language: "javascript",
-      category: "Backend",
-      tags: ["NextJS", "API", "Validation"],
-      author: "Jane Smith",
-      date: "March 22, 2025",
-      views: 178,
-      saves: 23,
-    },
-    {
-      id: 6,
-      title: "React Custom Hook",
-      description: "A custom hook for handling form inputs with validation",
-      preview:
-        "function useFormInput(initialValue = '', validator) { /* hook logic */ }",
-      language: "jsx",
-      category: "Frontend",
-      tags: ["React", "Hooks", "Forms"],
-      author: "Mike Johnson",
-      date: "March 20, 2025",
-      views: 201,
-      saves: 36,
-    },
-    {
-      id: 7,
-      title: "CSS Grid Layout Template",
-      description: "A template for creating complex layouts with CSS Grid",
-      preview:
-        ".grid-container { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }",
-      language: "css",
-      category: "Frontend",
-      tags: ["CSS", "Grid", "Layout"],
-      author: "Sarah Williams",
-      date: "March 18, 2025",
-      views: 167,
-      saves: 29,
-    },
+    
     {
       id: 8,
       title: "MongoDB Aggregation Pipeline",
@@ -154,7 +53,7 @@ const CodeSnippetsPage = () => {
       date: "March 15, 2025",
       views: 143,
       saves: 22,
-    },
+    }
   ]
 
   const categories = ["All", "Frontend", "Backend", "Database", "DevOps"]
@@ -326,7 +225,7 @@ const CodeSnippetsPage = () => {
                   {/* <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild> */}
-                        <Button
+                        {/* <Button
                           variant="outline"
                           size="icon"
                           className="h-6 w-6 bg-white"
@@ -335,7 +234,7 @@ const CodeSnippetsPage = () => {
                           }
                         >
                           <Copy className="size-3" />
-                        </Button>
+                        </Button> */}
                       {/* </TooltipTrigger>
                       <TooltipContent>
                         {copiedId === snippet.id
@@ -345,14 +244,14 @@ const CodeSnippetsPage = () => {
                     </Tooltip>
                   </TooltipProvider> */}
 
-                  <Button
+                  {/* <Button
                     variant="outline"
                     size="icon"
                     className="h-6 w-6 bg-white"
                     onClick={(e) => openPreview(e, snippet)}
                   >
                     <Maximize2 className="size-3" />
-                  </Button>
+                  </Button> */}
                 </div>
                 <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-slate-700 line-clamp-3">
                   {snippet.preview}
@@ -373,7 +272,7 @@ const CodeSnippetsPage = () => {
       </div>
 
       {/* Preview Modal */}
-      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+      {/* <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{selectedSnippet?.title}</DialogTitle>
@@ -397,7 +296,7 @@ const CodeSnippetsPage = () => {
             </pre>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
       {/* Empty state */}
       {filteredSnippets.length === 0 && (
